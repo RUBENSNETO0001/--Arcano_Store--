@@ -1,7 +1,7 @@
 const featuredProductsData = [
   {
     id: 1,
-    name: "Orbe Cristalino",
+    name: "boku no hero",
     price: "R$ 149,90",
     image: "/produtos/orbe-cristalino.jpg",
     category: "Artefatos",
@@ -9,25 +9,11 @@ const featuredProductsData = [
   },
   {
     id: 2,
-    name: "Livro das Sombras",
-    price: "R$ 89,90",
-    image: "/produtos/livro-sombras.jpg",
-    category: "Livros",
+    name: "Caneca do Deku",
+    price: "R$ 149,90",
+    image: "/produtos/orbe-cristalino.jpg",
+    category: "Artefatos",
     bestseller: true,
-  },
-  {
-    id: 3,
-    name: "Poção de Energia",
-    price: "R$ 45,90",
-    image: "/produtos/pocao-energia.jpg",
-    category: "Poções",
-  },
-  {
-    id: 4,
-    name: "Capa do Arcanista",
-    price: "R$ 299,90",
-    image: "/produtos/capa-arcanista.jpg",
-    category: "Vestimentas",
     new: true,
   },
 ];
