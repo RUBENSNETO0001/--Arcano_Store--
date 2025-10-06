@@ -1,6 +1,7 @@
 // Footer.jsx
 import React from 'react';
 import '../css/Footer.css';
+import Contato from './links/contato';
 
 const Footer = () => {
   return (
@@ -39,7 +40,7 @@ const Footer = () => {
               <li><a href="/">Início</a></li>
               <li><a href="/sobre">Sobre Nós</a></li>
               <li><a href="/produtos">Produtos</a></li>
-              <li><a href="/contato">Contato</a></li>
+              <li><Contato/></li>
             </ul>
           </div>
 

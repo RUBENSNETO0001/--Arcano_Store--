@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Navbar.css';
 import AuthPage from '../componente_sistema/login_registro'; // Garanta que este caminho está correto
+import Contato from './links/contato';
 
 const Navbar = ({ apenasLogin = false }) => {
     const [isAuthOpen, setIsAuthOpen] = useState(false);
@@ -59,7 +60,7 @@ const Navbar = ({ apenasLogin = false }) => {
                             <li className="navbar-item"><a href="#about" className="navbar-link">Sobre</a></li>
                             <li className="navbar-item"><a href="#services" className="navbar-link">Serviços</a></li>
                             <li className="navbar-item"><a href="#portfolio" className="navbar-link">Portfólio</a></li>
-                            <li className="navbar-item"><a href="#contact" className="navbar-link">Contato</a></li>
+                            <li className="navbar-item"><Contato /></li>
                         </ul>
                     )}
 
