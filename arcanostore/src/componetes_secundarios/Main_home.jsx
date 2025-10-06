@@ -80,8 +80,6 @@ const Main = () => {
         </div>
       </section>
 
-      ---
-
       {/* Categorias */}
       <section className="categories-section">
         <div className="container">
@@ -100,8 +98,6 @@ const Main = () => {
           </div>
         </div>
       </section>
-
-      ---
 
       {/* Produtos em Destaque */}
       <section className="featured-section">
@@ -156,8 +152,6 @@ const Main = () => {
         </div>
       </section>
 
-      ---
-
       {/* Banner Promocional */}
       <section className="promo-banner">
         <div className="container">
@@ -187,8 +181,6 @@ const Main = () => {
           </div>
         </div>
       </section>
-
-      ---
 
       {/* Benefícios */}
       <section className="benefits-section">

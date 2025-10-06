@@ -18,16 +18,16 @@ const Footer = () => {
               Oferecemos qualidade e excelência em cada compra.
             </p>
             <div className="social-links">
-              <a href="#" aria-label="Facebook">
+              <a href="#!" aria-label="Facebook">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="#" aria-label="Instagram">
+              <a href="#!" aria-label="Instagram">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="#" aria-label="Twitter">
+              <a href="#!" aria-label="Twitter">
                 <i className="fab fa-twitter"></i>
               </a>
-              <a href="#" aria-label="LinkedIn">
+              <a href="#!" aria-label="LinkedIn">
                 <i className="fab fa-linkedin-in"></i>
               </a>
             </div>
@@ -40,18 +40,16 @@ const Footer = () => {
               <li><a href="/sobre">Sobre Nós</a></li>
               <li><a href="/produtos">Produtos</a></li>
               <li><a href="/contato">Contato</a></li>
-              <li><a href="/blog">Blog</a></li>
             </ul>
           </div>
 
           <div className="footer-section">
             <h3 className="footer-title">Categorias</h3>
             <ul className="footer-links">
-              <li><a href="/categoria/livros">Livros Mágicos</a></li>
-              <li><a href="/categoria/artefatos">Artefatos</a></li>
-              <li><a href="/categoria/poções">Poções</a></li>
-              <li><a href="/categoria/vestimentas">Vestimentas</a></li>
-              <li><a href="/categoria/acessorios">Acessórios</a></li>
+              <li><a href="/categoria/livros">Canecas</a></li>
+              <li><a href="/categoria/artefatos">Manga</a></li>
+              <li><a href="/categoria/poções">Cartinha</a></li>
+              <li><a href="/categoria/vestimentas">Acessorio</a></li>
             </ul>
           </div>
 
@@ -60,11 +58,11 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <i className="fas fa-map-marker-alt"></i>
-                <span>Rua das Magias, 123 - Centro</span>
+                <span>Rua das XXXX, 123 - Centro</span>
               </div>
               <div className="contact-item">
                 <i className="fas fa-phone"></i>
-                <span>(11) 99999-9999</span>
+                <span>+55 (68) 9214-3842</span>
               </div>
               <div className="contact-item">
                 <i className="fas fa-envelope"></i>

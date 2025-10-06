@@ -166,6 +166,7 @@ body {
   transform: rotate(45deg) translate(-5px, -6px);
 }
 
+
 /* Overlay */
 .mobile-overlay {
   position: fixed;
@@ -374,7 +375,7 @@ body {
 
 /* Responsividade */
 @media screen and (max-width: 968px) {
-  .navbar-menu, .navbar-cta {
+  .navbar-menu, .navbar-cta, .cta-button {
     display: none;
   }
   
