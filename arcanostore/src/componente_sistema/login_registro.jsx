@@ -23,16 +23,16 @@ const RegistrationForm = () => {
         <form action="db_registro.php" method="post"> {/* Alterei para POST, que é mais seguro para registro */}
             <h1>Registro</h1>
             <label htmlFor="register-name">Nome Completo</label>
-            <input type="text" id="register-name" placeholder="Digite seu nome completo:" name="full_name" required />
+            <input type="text" id="register-name" placeholder="Digite seu nome completo:" name="full_name" min={5} max={100}required />
             
             <label htmlFor="register-email">Email</label>
             <input type="email" id="register-email" placeholder="Digite seu email:" name="email" required /> {/* Alterado para type="email" */}
             
             <label htmlFor="register-password">Senha</label>
-            <input type="password" id="register-password" placeholder="Digite uma senha:" name="password" required />
+            <input type="password" id="register-password" placeholder="Digite uma senha:" name="password" min={6} max={24} required />
             
             <label htmlFor="register-confirm-password">Confirmação de Senha</label>
-            <input type="password" id="register-confirm-password" placeholder="Confirme sua senha:" name="confirm_password" required />
+            <input type="password" id="register-confirm-password" placeholder="Confirme sua senha:" name="confirm_password" min={6} max={24} required />
             
             <input type="submit" value="Cadastrar" />
         </form>

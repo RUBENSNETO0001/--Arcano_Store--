@@ -58,8 +58,6 @@ const Navbar = ({ apenasLogin = false }) => {
                         <ul className="navbar-menu">
                             <li className="navbar-item"><a href="#home" className="navbar-link">Início</a></li>
                             <li className="navbar-item"><a href="#about" className="navbar-link">Sobre</a></li>
-                            <li className="navbar-item"><a href="#services" className="navbar-link">Serviços</a></li>
-                            <li className="navbar-item"><a href="#portfolio" className="navbar-link">Portfólio</a></li>
                             <li className="navbar-item"><Contato /></li>
                         </ul>
                     )}
@@ -103,7 +101,7 @@ const Navbar = ({ apenasLogin = false }) => {
                 )}
             </nav>
 
-            {/* 2. O MODAL DE AUTENTICAÇÃO */}
+            {/* O MODAL DE AUTENTICAÇÃO */}
             {isAuthOpen && (
                 <div className="modal-overlay active"> {/* Adicione 'active' aqui para o CSS funcionar */}
                     <AuthPage />
