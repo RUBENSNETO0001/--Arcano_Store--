@@ -1,0 +1,188 @@
+/*
+  -----------------------------
+  Estilos Globais da Página
+  -----------------------------
+*/
+.sobre-arcano-page {
+    font-family: 'Georgia', serif; /* Fonte Clássica e elegante */
+    color: #333; /* Cor de texto padrão escura */
+    background-color: #f8f8f8; /* Fundo suave */
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza o conteúdo na tela */
+    line-height: 1.6;
+}
+
+/* Títulos principais da página */
+.sobre-arcano-page h1 {
+    font-family: 'Playfair Display', serif; /* Fonte mais dramática para títulos */
+    font-size: 3em;
+    color: #2c3e50; /* Azul escuro ou preto forte */
+    margin-bottom: 10px;
+}
+
+.sobre-arcano-page h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2em;
+    color: #2c3e50;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #a87932; /* Linha sutil cor ouro/cobre */
+    padding-bottom: 5px;
+}
+
+.sobre-arcano-page h3 {
+    font-size: 1.4em;
+    color: #a87932; /* Destaque na cor da marca */
+    margin-top: 20px;
+}
+
+/*
+  -----------------------------
+  Estilos do Header e Parágrafos
+  -----------------------------
+*/
+.arcano-header {
+    text-align: center;
+    margin-bottom: 60px;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.arcano-header p {
+    font-size: 1.2em;
+    color: #666;
+    font-style: italic;
+}
+
+/* Estilo para todas as seções */
+.arcano-section {
+    margin-bottom: 50px;
+    padding: 30px;
+    background-color: #fff;
+    border-left: 5px solid #a87932;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+}
+
+.arcano-section p {
+    margin-bottom: 15px;
+}
+
+/* Estilos específicos para a lista de Missão */
+.missao-bloco ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 20px;
+}
+
+.missao-bloco li {
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23a87932"><path d="M12 2l1.9 6.2H21l-5.6 4.1 1.9 6.2L12 18l-5.3 4.1 1.9-6.2L3 8.2h7.1L12 2z"/></svg>') no-repeat left 5px;
+    background-size: 16px;
+    padding-left: 25px;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+/*
+  -----------------------------
+  Estilos da Seção de Valores (Grid)
+  -----------------------------
+*/
+.valores-introducao {
+    text-align: center;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.valores-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite quebrar em telas menores */
+}
+
+.valor-card {
+    flex: 1 1 300px; /* Base de 300px, flexível */
+    padding: 25px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #fdfdfd;
+}
+
+.valor-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.valor-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #2c3e50; /* Retorna à cor principal para o título do card */
+}
+
+/*
+  -----------------------------
+  Estilos do Footer (CTA)
+  -----------------------------
+*/
+.arcano-footer {
+    text-align: center;
+    padding: 40px 0 20px 0;
+}
+
+.arcano-footer p {
+    font-style: italic;
+    color: #888;
+}
+
+.cta-button {
+    background-color: #a87932; /* Cor de destaque (Ouro/Cobre) */
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+    margin-top: 15px;
+    letter-spacing: 0.5px;
+}
+
+.cta-button:hover {
+    background-color: #7d5c26; /* Um tom mais escuro no hover */
+    transform: translateY(-1px);
+}
+
+/*
+  -----------------------------
+  Responsividade
+  -----------------------------
+*/
+@media (max-width: 768px) {
+    .sobre-arcano-page {
+        padding: 20px 10px;
+    }
+
+    .sobre-arcano-page h1 {
+        font-size: 2.5em;
+    }
+
+    .sobre-arcano-page h2 {
+        font-size: 1.8em;
+    }
+    
+    .valores-grid {
+        flex-direction: column; /* Empilha os cards de valor em telas menores */
+    }
+
+    .arcano-section {
+        padding: 20px;
+    }
+}

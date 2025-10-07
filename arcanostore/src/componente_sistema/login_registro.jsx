@@ -32,7 +32,7 @@ const RegistrationForm = () => {
             <input type="date" id="register-dataNascimento" />
 
             <label htmlFor="register-cpf">CPF</label>
-            <input type="email" id="register-cpf" placeholder="Digite seu cpf:" name="cpf" min={2} max={11} required /> {/* Alterado para type="email" */}
+            <input type="text" id="register-cpf" placeholder="Digite seu cpf:" name="cpf" min={2} max={11} required /> {/* Alterado para type="email" */}
             
             <label htmlFor="register-password">Senha</label>
             <input type="password" id="register-password" placeholder="Digite uma senha:" name="password" min={6} max={24} required />

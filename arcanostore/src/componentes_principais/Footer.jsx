@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="footer-container">
         {/* Seção Principal */}
         <div className="footer-main">
-          <div className="footer-section">
+          <div className="footer-section1">
             <div className="footer-logo">
               <img src="assents/logo/logo.svg" alt="Logo" className="logo" />
               <span>Arcano Store</span>
