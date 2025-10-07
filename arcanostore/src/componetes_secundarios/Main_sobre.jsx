@@ -52,14 +52,6 @@ const Sobre = () => {
                     </div>
                 </div>
             </section>
-
-            <section className="arcano-section arcanos-futuro">
-                <h2>O Futuro nos Chama</h2>
-                <p>
-                    Olhamos para o futuro com a mesma curiosidade e reverência ao passado. Nossa meta é expandir nosso catálogo de **parcerias com artesãos globais** e investir em tecnologia para tornar a experiência de compra ainda mais imersiva e personalizada. 
-                    Junte-se a nós nesta busca pelo que é raro e verdadeiro. Na Arcano Store, **o mistério nunca sai de moda.**
-                </p>
-            </section>
         </article>
     );
 };
