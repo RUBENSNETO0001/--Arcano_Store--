@@ -20,7 +20,7 @@ const LoginForm = () => {
 // Componente para o formulário de Registro
 const RegistrationForm = () => {
     return (
-        <form action="db_registro.php" method="post"> {/* Alterei para POST, que é mais seguro para registro */}
+        <form action="../componente_sistema/login_registro/registro.php" method="post"> {/* Alterei para POST, que é mais seguro para registro */}
             <h1>Registro</h1>
             <label htmlFor="register-name">Nome Completo</label>
             <input type="text" id="register-name" placeholder="Digite seu nome completo:" name="full_name" min={5} max={100}required />
@@ -29,11 +29,14 @@ const RegistrationForm = () => {
             <input type="email" id="register-email" placeholder="Digite seu email:" name="email" required /> {/* Alterado para type="email" */}
             
             <label htmlFor="register-dataNascimento">Data de Nascimento</label>
-            <input type="date" id="register-dataNascimento" />
+            <input type="date" id="register-dataNascimento" name='date_nas' required/>
 
             <label htmlFor="register-cpf">CPF</label>
             <input type="text" id="register-cpf" placeholder="Digite seu cpf:" name="cpf" min={2} max={11} required /> {/* Alterado para type="email" */}
-            
+
+            <label htmlFor="register-cpf">Telefone</label>
+            <input type="text" id="register-telefone" placeholder="Digite seu numero de telefone:" name="telefone" min={9} max={11} required /> 
+
             <label htmlFor="register-password">Senha</label>
             <input type="password" id="register-password" placeholder="Digite uma senha:" name="password" min={6} max={24} required />
             
