@@ -1,17 +1,19 @@
 import React from 'react';
 import '../css/Main/Main.css';
+// Altere o caminho se o seu arquivo de produtos estiver em outra pasta
 import { featuredProductsData, categoriesData } from './Produtos';
 
 // Renomeando para facilitar a leitura no JSX:
 const featuredProducts = featuredProductsData;
 const categories = categoriesData;
 
-const Main = () => {
+// CORREÇÃO: Adicionando 'onViewProduct' como prop desestruturada
+const Main = ({ onViewProduct }) => {
 
   // Encontrando o produto mais vendido para a Hero Section
   const bestSellerProduct = featuredProducts.find(p => p.bestseller) || featuredProducts[0];
-  const scrollToProducts = (e) => {
 
+  const scrollToProducts = (e) => {
     e.preventDefault();
 
     const targetId = e.currentTarget.getAttribute('href').substring(1);
@@ -130,9 +132,13 @@ const Main = () => {
                     <h3 className="product-name">{product.name}</h3>
                     <div className="product-price">{product.price}</div>
                     <div className="product-actions">
-                      <button className="add-to-cart">
+                      <button
+                        className="add-to-cart"
+                        // CHAMA A FUNÇÃO E PASSA O ID DO PRODUTO CLICADO
+                        onClick={() => onViewProduct(product.id)}
+                      >
                         <i className="fas fa-shopping-cart"></i>
-                        Adicionar
+                        Ver Produto
                       </button>
                       <button className="wishlist">
                         <i className="far fa-heart"></i>

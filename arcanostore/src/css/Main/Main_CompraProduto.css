@@ -1,0 +1,333 @@
+/* ====================================
+   1. Variáveis Globais (Ajuste suas Cores)
+   ==================================== */
+:root {
+    --primary-color: #9c27b0;
+    /* Roxo Mágico (Principal) */
+    --secondary-color: #2c3e50;
+    /* Cinza Escuro (Texto/Fundo Secundário) */
+    --accent-color: #ff4141;
+    /* Vermelho (Desconto/Alerta) */
+    --background-light: #f9f9f9;
+    /* Fundo Leve */
+    --text-color: #333;
+    --border-color: #ddd;
+    --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Sombra suave */
+    --transition-speed: 0.3s;
+}
+
+/* ====================================
+       2. Estrutura da Página e Layout
+       ==================================== */
+.product-detail-page {
+    padding: 110px 20px;
+    /* Mais padding no topo e laterais */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* NOVO: Estilo para o botão de Voltar */
+.btn-back {
+    background: none;
+    border: none;
+    color: var(--secondary-color);
+    font-size: 1.1em;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+.btn-back:hover {
+    background-color: var(--background-light);
+    color: var(--primary-color);
+}
+
+/* Fim do Estilo do botão de Voltar */
+
+
+.product-detail-layout {
+    display: flex;
+    gap: 60px;
+    /* Maior espaçamento entre colunas */
+    flex-wrap: wrap;
+}
+
+/* ====================================
+       3. Coluna de Imagens e Galeria
+       ==================================== */
+.product-images {
+    flex: 1;
+    min-width: 350px;
+    max-width: 550px;
+}
+
+.main-image-container {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    /* Cantos mais arredondados */
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-light);
+    /* Adiciona profundidade */
+}
+
+.main-product-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: transform var(--transition-speed) ease;
+}
+
+/* Efeito sutil ao passar o mouse */
+.main-image-container:hover .main-product-image {
+    transform: scale(1.02);
+}
+
+.thumbnail-gallery {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.thumbnail {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color var(--transition-speed), transform 0.1s;
+    opacity: 0.7;
+    /* Suaviza as miniaturas inativas */
+}
+
+.thumbnail.active {
+    border-color: var(--primary-color);
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* ====================================
+       4. Coluna de Informações (Painel)
+       ==================================== */
+.product-info-panel {
+    flex: 1.5;
+    min-width: 400px;
+}
+
+.product-category-detail {
+    font-size: 1em;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1px;
+    /* Espaçamento para visual premium */
+    display: block;
+    margin-bottom: 10px;
+}
+
+.product-title {
+    font-size: 3em;
+    /* Maior destaque */
+    color: var(--secondary-color);
+    margin: 0 0 15px 0;
+    line-height: 1.1;
+}
+
+.product-price-detail {
+    font-size: 2.2em;
+    /* Maior preço */
+    font-weight: 800;
+    color: var(--text-color);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.discount-badge {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.5em;
+    margin-left: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(255, 65, 65, 0.4);
+}
+
+.product-description-full {
+    margin-bottom: 30px;
+    color: #666;
+}
+
+.product-description-full h2 {
+    font-size: 1.3em;
+    color: var(--secondary-color);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #f0f0f0;
+    margin: 30px 0;
+}
+
+/* ====================================
+       5. Ações de Compra e Botões
+       ==================================== */
+.product-purchase-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 30px 0;
+}
+
+.quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-selector label {
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.quantity-selector input {
+    width: 70px;
+    padding: 10px 0;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1em;
+    transition: border-color var(--transition-speed);
+}
+
+.quantity-selector input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.2);
+}
+
+/* Botão Primário (Adicionar ao Carrinho) */
+.btn-primary.add-to-cart-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform 0.1s, box-shadow var(--transition-speed);
+}
+
+.btn-primary.add-to-cart-btn:hover {
+    background-color: #7b1fa2;
+    /* Tom mais escuro */
+    box-shadow: 0 6px 15px rgba(156, 39, 176, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Botão Secundário (Lista de Desejos) */
+.wishlist-btn {
+    background-color: var(--background-light);
+    color: var(--secondary-color);
+    border: 1px solid var(--border-color);
+    padding: 12px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.wishlist-btn:hover {
+    background-color: #fff;
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+
+/* ====================================
+       6. Badges e Informações Adicionais
+       ==================================== */
+.shipping-info {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: var(--background-light);
+    border-radius: 10px;
+    color: var(--secondary-color);
+    font-style: normal;
+    /* Remove o italic para maior clareza */
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.shipping-info i {
+    color: var(--primary-color);
+    font-size: 1.2em;
+}
+
+/* ====================================
+       7. Media Query (Responsividade)
+       ==================================== */
+@media (max-width: 992px) {
+    .product-detail-layout {
+        gap: 30px;
+    }
+
+    .product-images,
+    .product-info-panel {
+        min-width: unset;
+    }
+
+    .product-title {
+        font-size: 2.5em;
+    }
+}
+
+@media (max-width: 768px) {
+    .product-detail-layout {
+        flex-direction: column;
+    }
+
+    .product-images,
+    .product-info-panel {
+        max-width: 100%;
+    }
+
+    .product-purchase-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .add-to-cart-btn,
+    .wishlist-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .quantity-selector {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .product-detail-page {
+        padding: 80px 15px;
+    }
+}

@@ -2,12 +2,13 @@
 const featuredProductsData = [
   {
     id: 1,
-    name: "Gachiakuta",
+    name: "Gachiakuta Volume 01",
     price: "R$ 50,90",
     image: "https://img.assinaja.com/assets/tZ/099/img/512813_520x520.png",
     category: "Manga",
     discount: "25% OFF",
-    new: true
+    new: true,
+    description : "O jovem Rudo habita em um gueto de descendentes de criminosos e vive recolhendo lixo e sendo discriminado, até que certo dia, ele é acusado injustamente de um crime que não cometeu e como punição é enviado a um local em que todos temem! Lá, o rapaz conhece conhece Enjin e acaba tendo um vislumbre de toda a verdade sobre o mundo e também começa a manifestar a sua habilidade: Dar vida às coisas! Assim, começa a jornada de Rudo e seu objetivo de mudar por completo o mundo de merda em que vive!!"
   },
   {
     id: 2,
