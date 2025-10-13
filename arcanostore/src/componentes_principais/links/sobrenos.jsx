@@ -1,4 +1,4 @@
-import '../css/Main/Main_sobre.css';
+import '../../css/Main/Main_sobre.css';
 
 const Sobre = () => {
     return ( 

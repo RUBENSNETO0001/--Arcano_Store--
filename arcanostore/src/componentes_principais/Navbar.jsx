@@ -1,9 +1,12 @@
+// src/componentes_principais/Navbar.js
+
 import React, { useState, useEffect } from 'react';
 import '../css/Navbar.css';
-import AuthPage from '../componetes_secundarios/login_registro'; // Garanta que este caminho está correto
+import AuthPage from '../componetes_secundarios/login_registro';
 import Contato from './links/contato';
 
-const Navbar = ({ apenasLogin = false }) => {
+// 👈 Agora aceita 'onNavigate' como prop
+const Navbar = ({ apenasLogin = false, onNavigate }) => { 
     const [isAuthOpen, setIsAuthOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -30,13 +33,18 @@ const Navbar = ({ apenasLogin = false }) => {
     }, []);
 
     // FUNÇÕES DE MANUSEIO
-    const handleLinkClick = () => {
+    // Função unificada para links de navegação (Home, Sobre)
+    const handleLinkClick = (view) => {
         setIsMobileMenuOpen(false);
+        // Chama a função do App.js para mudar a visualização
+        if (onNavigate) {
+            onNavigate(view); 
+        }
     };
 
     const handleLoginClick = () => {
         setIsAuthOpen(true);
-        setIsMobileMenuOpen(false); // Boa prática: fechar o menu mobile ao abrir o modal
+        setIsMobileMenuOpen(false);
     };
 
     return (
@@ -45,25 +53,33 @@ const Navbar = ({ apenasLogin = false }) => {
             <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="navbar-container">
 
-                    {/* Logo */}
                     <div className="navbar-logo">
-                        <a href="." onClick={handleLinkClick}>
+                        <button className='navbar-logo-button' onClick={() => handleLinkClick('home')}>
                             <img src="assents/logo/logo.svg" alt="logo" className='logo' />
                             <span>Arcano Store</span>
-                        </a>
+                        </button>
                     </div>
 
                     {/* Menu Desktop */}
                     {!apenasLogin && (
                         <ul className="navbar-menu">
-                            <li className="navbar-item"><a href="#home" className="navbar-link">Início</a></li>
-                            <li className="navbar-item"><a href="#about" className="navbar-link">Sobre</a></li>
+                            <li className="navbar-item">
+                               
+                                <button className="navbar-link" onClick={() => handleLinkClick('home')}>
+                                    Início
+                                </button>
+                            </li>
+                            <li className="navbar-item">
+                                <button className="navbar-link" onClick={() => handleLinkClick('sobre')}>
+                                    Sobre Nós
+                                </button>
+                            </li>
                             <li className="navbar-item"><Contato /></li>
                         </ul>
                     )}
 
                     {/* Botão de Login Desktop */}
-                    <div className="navbar-cta"> {/* Envolva o botão CTA em uma div para manter o alinhamento CSS */}
+                    <div className="navbar-cta">
                         <button className="cta-button" onClick={handleLoginClick}> Login </button>
                     </div>
 
@@ -84,12 +100,24 @@ const Navbar = ({ apenasLogin = false }) => {
                 {!apenasLogin && (
                     <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                         <ul className="mobile-menu-list">
-                            {/* ... Seus itens de menu mobile aqui ... */}
-                            <li className="mobile-item"><a href="#home" className="mobile-link" onClick={handleLinkClick}><i className="fas fa-home"></i>Início</a></li>
-                            <li className="mobile-item"><a href="#about" className="mobile-link" onClick={handleLinkClick}><i className="fas fa-user"></i>Sobre</a></li>
-                            <li className="mobile-item"><a href="#services" className="mobile-link" onClick={handleLinkClick}><i className="fas fa-cog"></i>Serviços</a></li>
-                            <li className="mobile-item"><a href="#portfolio" className="mobile-link" onClick={handleLinkClick}><i className="fas fa-briefcase"></i>Portfólio</a></li>
-                            <li className="mobile-item"><a href="#contact" className="mobile-link" onClick={handleLinkClick}><i className="fas fa-envelope"></i>Contato</a></li>
+                            
+                            {/* Início Mobile (TROCADO PARA BOTÃO) */}
+                            <li className="mobile-item">
+                                <button className="mobile-link" onClick={() => handleLinkClick('home')}>
+                                    <i className="fas fa-home"></i>Início
+                                </button>
+                            </li>
+                            {/* Sobre Mobile (TROCADO PARA BOTÃO) */}
+                            <li className="mobile-item">
+                                <button className="mobile-link" onClick={() => handleLinkClick('sobre')}>
+                                    <i className="fas fa-user"></i>Sobre
+                                </button>
+                            </li>
+                            {/* Mantenha o resto como estava (se não forem links de navegação principal) */}
+                            <li className="mobile-item"><a href="#services" className="mobile-link" onClick={() => setIsMobileMenuOpen(false)}><i className="fas fa-cog"></i>Serviços</a></li>
+                            <li className="mobile-item"><a href="#portfolio" className="mobile-link" onClick={() => setIsMobileMenuOpen(false)}><i className="fas fa-briefcase"></i>Portfólio</a></li>
+                            <li className="mobile-item"><a href="#contact" className="mobile-link" onClick={() => setIsMobileMenuOpen(false)}><i className="fas fa-envelope"></i>Contato</a></li>
+                            
                         </ul>
                         {/* Botão de Login no CTA Mobile */}
                         <div className="mobile-cta">
@@ -103,8 +131,8 @@ const Navbar = ({ apenasLogin = false }) => {
 
             {/* O MODAL DE AUTENTICAÇÃO */}
             {isAuthOpen && (
-                <div className="modal-overlay active"> {/* Adicione 'active' aqui para o CSS funcionar */}
-                    <AuthPage />
+                <div className="modal-overlay active">
+                    <AuthPage onClose={() => setIsAuthOpen(false)} /> {/* Adicione uma prop onClose ao AuthPage */}
                 </div>
             )}
         </>

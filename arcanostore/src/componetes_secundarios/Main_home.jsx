@@ -1,13 +1,5 @@
-// Main.jsx
 import React from 'react';
 import '../css/Main/Main.css';
-
-// -----------------------------------------------------------
-// ⚡️ ALTERAÇÃO CHAVE AQUI ⚡️
-// Assumindo que você exportou os arrays como 'featuredProductsData' e 'categoriesData'
-// do seu arquivo de dados (e que o arquivo de dados foi renomeado para 'data.js' ou similar,
-// mas vou manter './Produtos' para seguir sua estrutura, alterando o que é importado).
-// -----------------------------------------------------------
 
 // Se você exportou as variáveis brutas:
 import { featuredProductsData, categoriesData } from './Produtos';
@@ -15,12 +7,6 @@ import { featuredProductsData, categoriesData } from './Produtos';
 // Renomeando para facilitar a leitura no JSX:
 const featuredProducts = featuredProductsData;
 const categories = categoriesData;
-
-// Se você tivesse usado a exportação default da função `produtos`, o código seria assim:
-/*
-// import produtosModule from './Produtos';
-// const { featuredProducts, categories } = produtosModule();
-*/
 
 const Main = () => {
 
