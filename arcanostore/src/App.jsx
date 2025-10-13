@@ -1,5 +1,3 @@
-// src/App.js
-
 import React, { useState } from 'react';
 import Header from './componentes_principais/Navbar';
 import Footer from './componentes_principais/Footer';
@@ -22,7 +20,6 @@ function App() {
         return <Home />;
       case 'sobre':
         return <Sobre />;
-      // Você pode adicionar mais casos aqui, como 'contato'
       default:
         return <Home />;
     }
@@ -30,12 +27,8 @@ function App() {
 
   return (
     <div className="body">
-      {/* Passa a função de navegação para o Header */}
       <Header onNavigate={handleNavigation} />
-      
-      {/* Renderiza o conteúdo ativo */}
       {renderContent()}
-      
       <Footer/>
     </div>
   );

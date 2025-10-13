@@ -1,7 +1,5 @@
 import React from 'react';
 import '../css/Main/Main.css';
-
-// Se você exportou as variáveis brutas:
 import { featuredProductsData, categoriesData } from './Produtos';
 
 // Renomeando para facilitar a leitura no JSX:
@@ -12,6 +10,20 @@ const Main = () => {
 
   // Encontrando o produto mais vendido para a Hero Section
   const bestSellerProduct = featuredProducts.find(p => p.bestseller) || featuredProducts[0];
+  const scrollToProducts = (e) => {
+
+    e.preventDefault();
+
+    const targetId = e.currentTarget.getAttribute('href').substring(1);
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start' // Alinha o topo do elemento com o topo da janela
+      });
+    }
+  };
 
   return (
     <main className="main-content">
@@ -26,14 +38,10 @@ const Main = () => {
               O ponto de encontro definitivo para todos que vivem e respiram a cultura geek!
             </p>
             <div className="hero-buttons">
-              <button className="btn-primary">
+              <a className="btn-primary" href='#produtos' onClick={scrollToProducts}  >
                 Explorar Produtos
                 <i className="fas fa-wand-sparkles"></i>
-              </button>
-              <button className="btn-secondary">
-                <i className="fas fa-play"></i>
-                Ver Demonstração
-              </button>
+              </a>
             </div>
             <div className="hero-stats">
               {/* O seu componente estava usando '20+' para Produtos Geek, vou usar o count real */}
@@ -85,58 +93,65 @@ const Main = () => {
         </div>
       </section>
 
-      {/* Produtos em Destaque */}
-      <section className="featured-section">
-        <div className="container">
-          <div className="section-header">
+      <section id="produtos">
+
+        {/* Produtos em Destaque */}
+        <section className="featured-section">
+          <div className="container"><div className="section-header">
             <h2>Produtos em Destaque 🌟</h2>
             <p>Os itens mais procurados pelos arcanistas</p>
           </div>
-          <div className="products-grid">
-            {featuredProducts.map(product => (
-              <div key={product.id} className="product-card">
-                <div className="product-image">
-                  <img src={product.image} alt={product.name} />
-                  <div className="product-badges">
-                    {product.discount && (
-                      <span className="badge discount">{product.discount}</span>
-                    )}
-                    {product.bestseller && (
-                      <span className="badge bestseller">Mais Vendido</span>
-                    )}
-                    {product.new && (
-                      <span className="badge new">Novo</span>
-                    )}
-                  </div>
-                  <button className="quick-view">
-                    <i className="fas fa-eye"></i>
-                  </button>
-                </div>
-                <div className="product-info">
-                  <span className="product-category">{product.category}</span>
-                  <h3 className="product-name">{product.name}</h3>
-                  <div className="product-price">{product.price}</div>
-                  <div className="product-actions">
-                    <button className="add-to-cart">
-                      <i className="fas fa-shopping-cart"></i>
-                      Adicionar
-                    </button>
-                    <button className="wishlist">
-                      <i className="far fa-heart"></i>
+            <div className="products-grid">
+              {/* APLICANDO SLICE(0, 3) PARA LIMITAR A 3 PRODUTOS */}
+              {featuredProducts.slice(0, 3).map(product => (
+
+                <div key={product.id} className="product-card">
+
+                  <div className="product-image">
+                    <img src={product.image} alt={product.name} />
+                    <div className="product-badges">
+                      {product.discount && (
+                        <span className="badge discount">{product.discount}</span>
+                      )}
+                      {product.bestseller && (
+                        <span className="badge bestseller">Mais Vendido</span>
+                      )}
+                      {product.new && (
+                        <span className="badge new">Novo</span>
+                      )}
+                    </div>
+                    <button className="quick-view">
+                      <i className="fas fa-eye"></i>
                     </button>
                   </div>
+
+                  <div className="product-info">
+                    <span className="product-category">{product.category}</span>
+                    <h3 className="product-name">{product.name}</h3>
+                    <div className="product-price">{product.price}</div>
+                    <div className="product-actions">
+                      <button className="add-to-cart">
+                        <i className="fas fa-shopping-cart"></i>
+                        Adicionar
+                      </button>
+                      <button className="wishlist">
+                        <i className="far fa-heart"></i>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+
+            <div className="section-actions">
+              <button className="btn-outline">
+                Ver Todos os Produtos
+                <i className="fas fa-arrow-right"></i>
+              </button>
+            </div>
           </div>
-          <div className="section-actions">
-            <button className="btn-outline">
-              Ver Todos os Produtos
-              <i className="fas fa-arrow-right"></i>
-            </button>
-          </div>
-        </div>
-      </section>
+        </section>
+      </section> {/* CORREÇÃO: Fechamento final de section id="produtos" */}
 
       {/* Banner Promocional */}
       <section className="promo-banner">

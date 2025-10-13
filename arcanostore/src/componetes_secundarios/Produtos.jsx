@@ -24,22 +24,26 @@ const featuredProductsData = [
     category: "Acessorios",
     discount: "5% OFF",
   },
+  {
+    id: 4,
+    name: "Pulseira One piece",
+    price: "R$ 30,90",
+    image: "https://m.media-amazon.com/images/I/410jh8W1t8S._SY1000_.jpg",
+    category: "Acessorios",
+    discount: "5% OFF",
+  },
 ];
 
 // categotias
 const categoriesData = [
-  { name: "Caneca", icon: "📚", count: 6 },
-  { name: "Manga", icon: "⚱️", count: 5 },
-  { name: "cartinhas", icon: "🧪", count: 15 },
+  { name: "Caneca", icon: "🍻", count: 6 },
+  { name: "Manga", icon: "📚", count: 5 },
+  { name: "cartinhas", icon: "🃏", count: 15 },
   { name: "Acessórios", icon: "💎", count: 40 },
 ];
 
-// --- Funções de Exportação ---
-
 /**
- * Função principal que pode retornar todos os dados ou ser usada como
- * um módulo de agregação.
- * @returns {object} Um objeto contendo os dados de produtos e categorias.
+ * @returns {object} 
  */
 
 export const produtos = () => {

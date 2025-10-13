@@ -47,18 +47,11 @@ const RegistrationForm = () => {
         </form>
     );
 };
-
-/**
- * Componente principal que gerencia a exibição do Login ou Registro.
- */
 const AuthPage = () => {
-    // Estado para controlar qual formulário deve ser exibido.
-    // 'login' ou 'register'
     const [isLogin, setIsLogin] = useState(true);
 
     return (
         <div className="login_Registro">
-            {/* Botões para alternar entre as telas */}
             <div className="toggle-buttons">
                 <button 
                     onClick={() => setIsLogin(true)} 
@@ -73,8 +66,6 @@ const AuthPage = () => {
                     Registro
                 </button>
             </div>
-            
-            {/* Renderiza o formulário baseado no estado 'isLogin' */}
             {isLogin ? <LoginForm /> : <RegistrationForm />}
         </div>
     );
