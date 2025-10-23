@@ -2,8 +2,8 @@
 const PHP_SERVER_BASE = 'http://localhost'; // A porta 80 é implícita 
 
 // ASSUMA que seu servidor web está servindo a pasta 'backend_php' (ou onde você colocou o registro.php)
-const PHP_API_URL_REGISTRO = '/arcano_store/backend_php/login_registro/registro.php'; 
-const PHP_API_URL_LOGIN = '/backend_php/login_registro/db_login.php'; 
+const PHP_API_URL_REGISTRO = '/--ARCANO_STORE--/arcanostore/backend_php/login_registro/registro.php'; 
+const PHP_API_URL_LOGIN = '/--ARCANO_STORE--/arcanostore/backend_php/login_registro/login.php';
 
 
 // --- FUNÇÃO DE REGISTRO ---
