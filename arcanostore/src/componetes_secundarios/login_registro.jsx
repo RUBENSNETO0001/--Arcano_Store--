@@ -1,9 +1,8 @@
 import '../css/Registro/login.css';
 import React, { useState } from 'react';
-// IMPORTA as funções de comunicação com o PHP/API
-import { registrarUsuario, fazerLogin } from './services/apiService';
+import { registrarUsuario, fazerLogin } from '../services/apiService'; // Ajuste o caminho se necessário
 
-// Componente para o formulário de Login (REFATORADO para usar fetch/API)
+// Componente para o formulário de Login
 const LoginForm = () => {
     const [loginData, setLoginData] = useState({ username_or_email: '', password: '' });
     const [status, setStatus] = useState('');
@@ -18,12 +17,10 @@ const LoginForm = () => {
         setStatus('Tentando fazer login...');
         setLoading(true);
         
-        // Chama a função de serviço de login
         const resultado = await fazerLogin(loginData); 
 
         if (resultado.sucesso) {
             setStatus(`Sucesso! Bem-vindo, ${resultado.nome || 'usuário'}.`);
-            // Aqui você faria o redirecionamento ou salvaria o token de autenticação
         } else {
             setStatus(`Erro no Login: ${resultado.mensagem}`);
         }
@@ -59,14 +56,13 @@ const LoginForm = () => {
     );
 };
 
-// Componente para o formulário de Registro (CORRIGIDO PARA USAR ESTADO E SERVIÇO)
+// Componente para o formulário de Registro
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
-        full_name: '', email: '', date_nas: '', 
+        full_name: '', email: '', date_nas: '', // Estes nomes são enviados ao PHP
         cpf: '', telefone: '', password: '', 
         confirm_password: ''
     });
-    // MUDANÇA: Adiciona 'resultado' ao estado para ser acessível no return
     const [status, setStatus] = useState({ mensagem: '', sucesso: false });
     const [loading, setLoading] = useState(false);
 
@@ -81,7 +77,6 @@ const RegistrationForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // Limpa o status anterior
         setStatus({ mensagem: '', sucesso: false });
 
         if (formData.password !== formData.confirm_password) {
@@ -93,7 +88,7 @@ const RegistrationForm = () => {
         setLoading(true);
 
         // Chama a função de serviço
-        const resultadoAPI = await registrarUsuario(formData); // A variável agora é 'resultadoAPI'
+        const resultadoAPI = await registrarUsuario(formData); 
 
         // Trata o resultado do PHP
         if (resultadoAPI.sucesso) {
@@ -113,7 +108,6 @@ const RegistrationForm = () => {
         <form onSubmit={handleSubmit}> 
             <h1>Registro</h1>
             
-            {/* Exemplo de um campo (todos os outros inputs devem ter name, value, onChange) */}
             <label htmlFor="register-name">Nome Completo</label>
             <input type="text" id="register-name" name="full_name" value={formData.full_name} onChange={handleChange} required />
             
@@ -124,20 +118,19 @@ const RegistrationForm = () => {
             <input type="date" id="register-dataNascimento" name='date_nas' value={formData.date_nas} onChange={handleChange} required/>
 
             <label htmlFor="register-cpf">CPF</label>
-            <input type="text" id="register-cpf" name="cpf" value={formData.cpf} onChange={handleChange} required />
+            <input type="text" id="register-cpf" name="cpf" value={formData.cpf} onChange={handleChange} required maxLength={11}/>
 
             <label htmlFor="register-telefone">Telefone</label>
-            <input type="text" id="register-telefone" name="telefone" value={formData.telefone} onChange={handleChange} required /> 
+            <input type="text" id="register-telefone" name="telefone" value={formData.telefone} onChange={handleChange} required maxLength={12}/> 
 
             <label htmlFor="register-password">Senha</label>
-            <input type="password" id="register-password" name="password" value={formData.password} onChange={handleChange} required />
+            <input type="password" id="register-password" name="password" value={formData.password} onChange={handleChange} required minLength={5}/>
             
             <label htmlFor="register-confirm-password">Confirmação de Senha</label>
-            <input type="password" id="register-confirm-password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} required />
+            <input type="password" id="register-confirm-password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} required minLength={5}/>
             
             <input type="submit" value={loading ? "Cadastrando..." : "Cadastrar"} disabled={loading} />
             
-            {/* CORREÇÃO DO ERRO: Agora 'status.sucesso' existe porque está no estado! */}
             {status.mensagem && <p className={status.sucesso ? 'success' : 'error'}>{status.mensagem}</p>}
         </form>
     );
