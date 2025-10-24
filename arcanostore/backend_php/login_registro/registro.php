@@ -1,30 +1,50 @@
 <?php
-header("Access-Control-Allow-Origin: http://localhost:3000"); // <-- THIS IS KEY
+// Arquivo: registro.php
+
+// 1. CONFIGURAÇÃO DE DEBUG E CORS
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Cabeçalhos CORS e de Método
+header("Access-Control-Allow-Origin: http://localhost:3000"); 
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type"); 
 header("Access-Control-Max-Age: 86400"); 
 
-// Check if it's the preflight request (OPTIONS) and exit
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200); // Respond OK to the preflight request
-    exit(0); // <-- THIS IS CRITICAL
+    http_response_code(200);
+    exit(0);
 }
-// Inclui a conexão. A variável $conexao virá deste include.
-// OBSERVAÇÃO: O seu código original dependia de um include que eu removi/substituí pela conexão direta acima para simplificar.
-// Se você mantiver o include, garanta que ele define $conexao corretamente.
-include '../conexao_banco_de_dados/conexao.php'; 
 
+// Garante que a resposta será JSON - ESSA LINHA DEVE SER EXECUTADA COM SUCESSO
+header("Content-Type: application/json; charset=UTF-8"); 
+
+// 2. INCLUI O CONECTOR USANDO CAMINHO RELATIVO ROBUSTO
+// Assumindo que registro.php está em /login_registro/ e conexao.php está em /conexao_banco_de_dados/
+$caminho_conexao = dirname(__DIR__) . '/conexao_banco_de_dados/conexao.php';
+
+if (!file_exists($caminho_conexao)) {
+    http_response_code(500);
+    echo json_encode(["sucesso" => false, "mensagem" => "Erro Fatal: Arquivo de conexão não encontrado. Caminho testado: " . $caminho_conexao ]);
+    exit(); 
+}
+
+include $caminho_conexao;
+
+
+// ====================================================================
+// 3. LÓGICA DE REGISTRO (DAO)
+// ====================================================================
 
 class RegistroDao {
     
     public static function verify_password($a, $b) {
-        // Usamos estritamente para garantir que as senhas sejam idênticas antes de hashear
         if ($a === $b) return 1;
         return 2;
     }
     
     public static function hash_password($a) {
-        // Usa a constante recomendada
         return password_hash($a, PASSWORD_DEFAULT);
     }
 
@@ -35,70 +55,65 @@ class RegistroDao {
 
         if (!$data) {
             http_response_code(400);
-            echo json_encode(["sucesso" => false, "mensagem" => "Dados JSON inválidos."]);
-            return;
+            return json_encode(["sucesso" => false, "mensagem" => "Dados JSON inválidos."]);
         }
         
         // Extração dos dados do JSON
         $nome = $data["full_name"] ?? null;
         $email = $data["email"] ?? null;
-        $data_nasc = $data["date_nas"] ?? null; // Corresponde ao 'date_nas' do JS
+        $data_nasc = $data["date_nas"] ?? null;
         $number_tele = $data["telefone"] ?? null;
         $cpf = $data["cpf"] ?? null;
         $senha = $data["password"] ?? null;
         $senha_confirmada = $data["confirm_password"] ?? null;
         
-        if (!$nome || !$email || !$senha || !$senha_confirmada) {
+        // VALIDAÇÃO CORRIGIDA: Agora usa $senha_confirmada
+        if (!$nome || !$email || !$senha || !$senha_confirmada) { 
             http_response_code(400);
-            echo json_encode(["sucesso" => false, "mensagem" => "Todos os campos obrigatórios devem ser preenchidos."]);
-            return;
+            return json_encode(["sucesso" => false, "mensagem" => "Todos os campos obrigatórios devem ser preenchidos."]);
         }
 
         if (self::verify_password($senha, $senha_confirmada) == 1) {
             $hash_senha = self::hash_password($senha);
 
-            // *** CORREÇÃO CRÍTICA: Nomes de colunas ajustados para corresponder ao SQL ***
             $stmt = $conexao_db->prepare("INSERT INTO usuario(nome_completo, data_nascimento, cpf, email, telefone, senha) VALUES(?, ?, ?, ?, ?, ?)");
             
-            // Ordem das variáveis deve corresponder à ordem das colunas acima:
-            // nome_completo ($nome), data_nascimento ($data_nasc), cpf ($cpf), email ($email), telefone ($number_tele), senha ($hash_senha)
+            if ($stmt === false) {
+                http_response_code(500);
+                return json_encode(["sucesso" => false, "mensagem" => "Erro interno na preparação do SQL."]);
+            }
+
             $stmt->bind_param("ssssss", $nome, $data_nasc, $cpf, $email, $number_tele, $hash_senha);
 
             if ($stmt->execute()) {
                 http_response_code(201);
-                echo json_encode(["sucesso" => true, "mensagem" => "Usuário registrado com sucesso."]);
+                $stmt->close();
+                return json_encode(["sucesso" => true, "mensagem" => "Usuário registrado com sucesso."]);
             } else {
-                // Se houver erro aqui (ex: CPF duplicado se houvesse UNIQUE constraint)
                 http_response_code(500);
-                echo json_encode(["sucesso" => false, "mensagem" => "Erro ao salvar no banco de dados: " . $conexao_db->error]);
+                $stmt->close();
+                return json_encode(["sucesso" => false, "mensagem" => "Erro ao salvar no banco de dados. (Verifique CPF duplicado ou restrições)" ]);
             }
-
-            $stmt->close();
             
         } else {
             http_response_code(400);
-            echo json_encode(["sucesso" => false, "mensagem" => "Senha não confere, tente novamente!"]);
+            return json_encode(["sucesso" => false, "mensagem" => "Senha não confere, tente novamente!"]);
         }
     }
 }
 
 
-// *** EXECUÇÃO DA API ***
-
-// 1. Verifica se a conexão foi bem-sucedida (Se $conexao é null ou tem erro de conexão)
-if ($conexao === null || $conexao->connect_error) {
-    if (!headers_sent()) {
-        header("Content-Type: application/json; charset=UTF-8");
-    }
+// 4. EXECUÇÃO FINAL
+if ($conexao === null) {
     http_response_code(500);
-    echo json_encode(["sucesso" => false, "mensagem" => "Erro de conexão com o Banco de Dados." ]);
-    exit(); // Interrompe TUDO aqui.
+    echo json_encode(["sucesso" => false, "mensagem" => "Erro de conexão com o Banco de Dados. Verifique o log." ]);
+    exit(); 
 }
 
-// 2. Instancia a classe e chama o método 'save', passando a conexão
 $dao = new RegistroDao();
-$dao->save($conexao); 
+$response = $dao->save($conexao); 
 
-// 3. Fecha a conexão
 $conexao->close();
-?>
+
+echo $response;
+// NADA ABAIXO DESTA LINHA.
