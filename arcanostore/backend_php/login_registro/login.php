@@ -1,10 +1,11 @@
 <?php
+// Arquivo: api/login.php
+
 // ------------------------------------------------------------------
-// 1. CONFIGURAÇÕES DE CORS (Cross-Origin Resource Sharing)
-// Permite que seu frontend (localhost:3000) acesse esta API
+// 1. CONFIGURAÇÕES E CORS
 // ------------------------------------------------------------------
 header("Access-Control-Allow-Origin: http://localhost:3000");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type"); 
 header("Access-Control-Max-Age: 86400"); 
 
@@ -18,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 header("Content-Type: application/json; charset=UTF-8");
 
 // Inclui a conexão com o banco de dados
-// ATENÇÃO: Certifique-se que este include define a variável $conexao
+// ATENÇÃO: Ajuste o caminho conforme a estrutura do seu projeto
 include '../conexao_banco_de_dados/conexao.php'; 
 
 // ------------------------------------------------------------------
@@ -57,7 +58,6 @@ class LoginDao {
         $senha_enviada = $data["password"];
         
         // 2. Buscar o usuário no banco pelo Email
-        // Usamos prepared statements para evitar SQL Injection
         $stmt = $conexao_db->prepare("SELECT id, nome_completo, senha FROM usuario WHERE email = ?");
         if (!$stmt) {
              http_response_code(500);
@@ -71,8 +71,6 @@ class LoginDao {
 
         // 3. Verificar se o usuário foi encontrado
         if ($resultado->num_rows === 0) {
-            // NOTA DE SEGURANÇA: Retornar uma mensagem genérica (ex: "Credenciais inválidas")
-            // é melhor do que dizer "Usuário não encontrado", para não dar dicas a atacantes.
             http_response_code(401); // Unauthorized
             echo json_encode(["sucesso" => false, "mensagem" => "Email ou senha inválidos."]);
             $stmt->close();
@@ -80,7 +78,7 @@ class LoginDao {
         }
 
         $usuario = $resultado->fetch_assoc();
-        $stmt->close(); // Fecha o primeiro statement
+        $stmt->close(); 
 
         // 4. Verificar a senha
         $hash_db = $usuario["senha"];
@@ -88,16 +86,12 @@ class LoginDao {
         if (self::verify_password($senha_enviada, $hash_db)) {
             // *** SUCESSO NA AUTENTICAÇÃO ***
             
-            // Aqui você adicionaria a lógica de Sessão ou Geração de Token JWT (para APIs RESTful)
-            // Por simplicidade, retornamos o ID e o nome.
-            
             http_response_code(200); // OK
             echo json_encode([
                 "sucesso" => true, 
                 "mensagem" => "Login realizado com sucesso!",
                 "id_usuario" => $usuario["id"],
                 "nome" => $usuario["nome_completo"]
-                // Em um cenário real, você retornaria um TOKEN de autenticação aqui.
             ]);
         } else {
             // *** FALHA NA VERIFICAÇÃO DA SENHA ***

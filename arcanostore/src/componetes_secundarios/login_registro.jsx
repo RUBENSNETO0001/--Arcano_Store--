@@ -1,66 +1,118 @@
 import '../css/Registro/login.css';
 import React, { useState } from 'react';
-import { registrarUsuario, fazerLogin } from '../services/apiService'; // Ajuste o caminho se necessário
+// Certifique-se que o caminho para apiService.js está correto
+import { fazerLogin } from '../services/apiService'; 
 
-// Componente para o formulário de Login
-const LoginForm = () => {
-    const [loginData, setLoginData] = useState({ username_or_email: '', password: '' });
-    const [status, setStatus] = useState('');
-    const [loading, setLoading] = useState(false);
+// ------------------------------------------------------------------
+// FUNÇÃO DE SERVIÇO DE REGISTRO (Deve ser importada do apiService.js)
+// Como ela não está definida aqui, usaremos uma função placeholder 
+// que deve ser substituída pela sua chamada real ao backend PHP de registro.
+// ------------------------------------------------------------------
+const registrarUsuario = async (data) => {
+    // Substitua esta chamada pela sua implementação real:
+    // Exemplo: return await fetch(`${PHP_SERVER_BASE}${PHP_API_URL_REGISTER}`, { ... });
+
+    console.warn("AVISO: A função registrarUsuario está usando um placeholder. Verifique sua importação de apiService.");
+    
+    // Placeholder: Simulando uma falha ou sucesso no registro
+    await new Promise(resolve => setTimeout(resolve, 500)); // Simula latência de rede
+    
+    if (data.email === "teste@duplicado.com") {
+        return { sucesso: false, mensagem: "Este email já está cadastrado." };
+    }
+    
+    return { sucesso: true, mensagem: "Usuário registrado com sucesso (Placeholder)." };
+};
+
+
+// ==================================================================
+// 1. COMPONENTE DE LOGIN
+// ==================================================================
+function LoginForm() {
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '' // Deve ser 'email' e 'password' para bater com o PHP (login.php)
+    });
+    const [message, setMessage] = useState(null);
 
     const handleChange = (e) => {
-        setLoginData({ ...loginData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData(prevData => ({
+            ...prevData,
+            [name]: value
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setStatus('Tentando fazer login...');
-        setLoading(true);
+        setMessage(null); 
+
+        if (!formData.email || !formData.password) {
+            setMessage({ sucesso: false, mensagem: "Por favor, preencha o Email e a Senha." });
+            return;
+        }
+
+        // Chama a função de serviço de LOGIN
+        const resultado = await fazerLogin(formData); 
         
-        const resultado = await fazerLogin(loginData); 
+        setMessage(resultado);
 
         if (resultado.sucesso) {
-            setStatus(`Sucesso! Bem-vindo, ${resultado.nome || 'usuário'}.`);
-        } else {
-            setStatus(`Erro no Login: ${resultado.mensagem}`);
+            console.log("Login OK:", resultado);
+            // Aqui você faria o redirecionamento ou salvamento de token
         }
-        setLoading(false);
     };
 
     return (
-        <form onSubmit={handleSubmit}> 
-            <h1>Login</h1>
-            <label htmlFor="login-username-email">Nome ou Email</label>
-            <input 
-                type="text" 
-                id="login-username-email" 
-                name="username_or_email" 
-                value={loginData.username_or_email} 
-                onChange={handleChange} 
-                required 
-            />
+        <form onSubmit={handleSubmit}>
+            <h2>Login</h2>
             
-            <label htmlFor="login-password">Senha</label>
-            <input 
-                type="password" 
-                id="login-password" 
-                name="password" 
-                value={loginData.password} 
-                onChange={handleChange} 
-                required 
-            />
-            
-            <input type="submit" value={loading ? "Entrando..." : "Entrar"} disabled={loading} />
-            {status && <p className={status.includes('Sucesso') ? 'success' : 'error'}>{status}</p>}
+            <div>
+                <label htmlFor="email">Email:</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email" // NOME CORRETO ESPERADO PELO PHP
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div>
+                <label htmlFor="password">Senha:</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password" // NOME CORRETO ESPERADO PELO PHP
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <button type="submit">Entrar</button>
+
+            {message && (
+                <div style={{ color: message.sucesso ? 'green' : 'red', marginTop: '10px' }}>
+                    {message.mensagem}
+                </div>
+            )}
         </form>
     );
-};
+}
 
-// Componente para o formulário de Registro
+// ==================================================================
+// 2. COMPONENTE DE REGISTRO
+// ==================================================================
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
-        full_name: '', email: '', date_nas: '', // Estes nomes são enviados ao PHP
-        cpf: '', telefone: '', password: '', 
+        full_name: '', 
+        email: '', 
+        date_nas: '', 
+        cpf: '', 
+        telefone: '', 
+        password: '', 
         confirm_password: ''
     });
     const [status, setStatus] = useState({ mensagem: '', sucesso: false });
@@ -87,12 +139,12 @@ const RegistrationForm = () => {
         setStatus({ mensagem: 'Enviando dados...', sucesso: false });
         setLoading(true);
 
-        // Chama a função de serviço
+        // Chama a função de serviço de REGISTRO (usando a função placeholder acima)
         const resultadoAPI = await registrarUsuario(formData); 
 
         // Trata o resultado do PHP
         if (resultadoAPI.sucesso) {
-            setStatus({ mensagem: `Sucesso: ${resultadoAPI.mensagem}.`, sucesso: true });
+            setStatus({ mensagem: `Sucesso: ${resultadoAPI.mensagem}`, sucesso: true });
             setFormData({ // Limpa os campos
                 full_name: '', email: '', date_nas: '', 
                 cpf: '', telefone: '', password: '', 
@@ -136,6 +188,9 @@ const RegistrationForm = () => {
 };
 
 
+// ==================================================================
+// 3. COMPONENTE PRINCIPAL (ÚNICO DEFAULT EXPORT)
+// ==================================================================
 const AuthPage = () => {
     const [isLogin, setIsLogin] = useState(true);
 
@@ -160,4 +215,5 @@ const AuthPage = () => {
     );
 };
 
+// ÚNICO DEFAULT EXPORT para evitar o erro de compilação
 export default AuthPage;

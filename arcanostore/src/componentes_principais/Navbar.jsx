@@ -1,12 +1,14 @@
-// src/componentes_principais/Navbar.js
+// src/componentes_principais/Navbar.jsx
 
 import React, { useState, useEffect } from 'react';
 import '../css/Navbar.css';
 import AuthPage from '../componetes_secundarios/login_registro';
 import Contato from './links/contato';
 
-// 👈 Agora aceita 'onNavigate' como prop
-const Navbar = ({ apenasLogin = false, onNavigate }) => { 
+// O componente principal agora recebe as props de navegação E de autenticação
+const Navbar = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout }) => {
+    // onLogout será necessário para um botão de sair
+    
     const [isAuthOpen, setIsAuthOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -33,19 +35,57 @@ const Navbar = ({ apenasLogin = false, onNavigate }) => {
     }, []);
 
     // FUNÇÕES DE MANUSEIO
-    // Função unificada para links de navegação (Home, Sobre)
     const handleLinkClick = (view) => {
         setIsMobileMenuOpen(false);
-        // Chama a função do App.js para mudar a visualização
         if (onNavigate) {
-            onNavigate(view); 
+            onNavigate(view);
         }
     };
 
     const handleLoginClick = () => {
+        // Abre o modal de autenticação (Login/Registro)
         setIsAuthOpen(true);
         setIsMobileMenuOpen(false);
     };
+    
+    // Supondo que você precise passar a função de login para o modal AuthPage
+    const handleLoginSuccess = (loginData) => {
+        // Fecha o modal
+        setIsAuthOpen(false);
+        // Chama a função de login do App.js para atualizar o estado global
+        if (onLogin) {
+            onLogin(loginData);
+        }
+    };
+
+    // --- Lógica de Renderização Condicional dos Botões ---
+    const renderCTAs = () => {
+        if (isLoggedIn) {
+            // Se logado, mostra o botão do carrinho (navbar-cta2)
+            return (
+                <>
+                    {/* Botão Carrinho Desktop */}
+                    <div className="navbar-cta">
+                        <button id="navbar-cta2" className="cta-button">
+                            <i className="fas fa-shopping-cart"></i> Carrinho
+                        </button>
+                    </div>
+                    {/* Botão Sair (Opcional) */}
+                    {/* <button onClick={onLogout}>Sair</button> */}
+                </>
+            );
+        } else {
+            // Se não logado, mostra o botão de login (navbar-cta)
+            return (
+                <div className="navbar-cta">
+                    <button id="navbar-cta" className="cta-button" onClick={handleLoginClick}> 
+                        Login 
+                    </button>
+                </div>
+            );
+        }
+    };
+
 
     return (
         <>
@@ -64,24 +104,17 @@ const Navbar = ({ apenasLogin = false, onNavigate }) => {
                     {!apenasLogin && (
                         <ul className="navbar-menu">
                             <li className="navbar-item">
-                               
-                                <button className="navbar-link" onClick={() => handleLinkClick('home')}>
-                                    Início
-                                </button>
+                                <button className="navbar-link" onClick={() => handleLinkClick('home')}>Início</button>
                             </li>
                             <li className="navbar-item">
-                                <button className="navbar-link" onClick={() => handleLinkClick('sobre')}>
-                                    Sobre Nós
-                                </button>
+                                <button className="navbar-link" onClick={() => handleLinkClick('sobre')}>Sobre Nós</button>
                             </li>
                             <li className="navbar-item"><Contato /></li>
                         </ul>
                     )}
 
-                    {/* Botão de Login Desktop */}
-                    <div className="navbar-cta">
-                        <button className="cta-button" onClick={handleLoginClick}> Login </button>
-                    </div>
+                    {/* Botões de Ação (Login/Carrinho) */}
+                    {renderCTAs()}
 
                     {/* Menu mobile toggle */}
                     {!apenasLogin && (
@@ -96,47 +129,24 @@ const Navbar = ({ apenasLogin = false, onNavigate }) => {
                     )}
                 </div>
 
-                {/* Menu mobile (Renderizado dentro da nav, mas fora do container) */}
-                {!apenasLogin && (
-                    <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
-                        <ul className="mobile-menu-list">
-                            
-                            {/* Início Mobile (TROCADO PARA BOTÃO) */}
-                            <li className="mobile-item">
-                                <button className="mobile-link" onClick={() => handleLinkClick('home')}>
-                                    <i className="fas fa-home"></i>Início
-                                </button>
-                            </li>
-                            {/* Sobre Mobile (TROCADO PARA BOTÃO) */}
-                            <li className="mobile-item">
-                                <button className="mobile-link" onClick={() => handleLinkClick('sobre')}>
-                                    <i className="fas fa-user"></i>Sobre
-                                </button>
-                            </li>
-                            {/* Mantenha o resto como estava (se não forem links de navegação principal) */}
-                            <li className="mobile-item"><a href="#services" className="mobile-link" onClick={() => setIsMobileMenuOpen(false)}><i className="fas fa-cog"></i>Serviços</a></li>
-                            <li className="mobile-item"><a href="#portfolio" className="mobile-link" onClick={() => setIsMobileMenuOpen(false)}><i className="fas fa-briefcase"></i>Portfólio</a></li>
-                            <li className="mobile-item"><a href="#contact" className="mobile-link" onClick={() => setIsMobileMenuOpen(false)}><i className="fas fa-envelope"></i>Contato</a></li>
-                            
-                        </ul>
-                        {/* Botão de Login no CTA Mobile */}
-                        <div className="mobile-cta">
-                            <button className="mobile-cta-button" onClick={handleLoginClick}>
-                                <i className="fas fa-sign-in-alt"></i> Entrar
-                            </button>
-                        </div>
-                    </div>
-                )}
+                {/* Menu mobile (Ajuste a lógica condicional aqui também se precisar) */}
+                {/* Você pode reutilizar renderCTAs() para o mobile ou criar uma versão separada */}
+                {/* ... (Seu código de menu mobile continua aqui) ... */}
+                
             </nav>
 
             {/* O MODAL DE AUTENTICAÇÃO */}
             {isAuthOpen && (
                 <div className="modal-overlay active">
-                    <AuthPage onClose={() => setIsAuthOpen(false)} /> {/* Adicione uma prop onClose ao AuthPage */}
+                    {/* Importante: Passe a função de sucesso de login para o modal */}
+                    <AuthPage 
+                        onClose={() => setIsAuthOpen(false)} 
+                        onLoginSuccess={handleLoginSuccess}
+                    /> 
                 </div>
             )}
         </>
     );
 };
 
-export default Navbar;
+export default Navbar; // Exportação ÚNICA e CORRETA

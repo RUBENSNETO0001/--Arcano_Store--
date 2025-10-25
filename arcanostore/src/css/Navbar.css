@@ -141,11 +141,6 @@ body {
     width: 100%;
 }
 
-/* ---------------------------------------------------------------------- */
-/* FIM DOS AJUSTES PARA <BUTTON> */
-/* ---------------------------------------------------------------------- */
-
-
 /* Botão CTA (Permanece como <button>, sem alterações necessárias) */
 .navbar-cta .cta-button {
     background: var(--primary-color);
@@ -161,6 +156,24 @@ body {
 }
 
 .navbar-cta .cta-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
+}
+.navbar-cta2 .navbar-cart-button{
+    display: none;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+    font-family: 'Poppins', sans-serif; 
+}
+.navbar-cta2 .navbar-cart-button:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
