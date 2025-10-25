@@ -105,9 +105,8 @@ const RegistrationForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit}> 
+        <form onSubmit={handleSubmit} method='POST'> 
             <h1>Registro</h1>
-            
             <label htmlFor="register-name">Nome Completo</label>
             <input type="text" id="register-name" name="full_name" value={formData.full_name} onChange={handleChange} required />
             

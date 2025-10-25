@@ -15,7 +15,6 @@ try {
     
     // A conexão é tentada.
     $conexao = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
-    
 }
 catch (mysqli_sql_exception $e) {
     // Loga o erro detalhado no log do servidor (não envia para o cliente)
