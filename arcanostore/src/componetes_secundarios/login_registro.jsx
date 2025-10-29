@@ -2,27 +2,14 @@ import '../css/Registro/login.css';
 import React, { useState } from 'react';
 
 // ==================================================================
-// 0. FUNÇÕES DE SERVIÇO (Importação e Placeholder)
+// 0. FUNÇÕES DE SERVIÇO (CORREÇÃO: Importação correta)
 // ==================================================================
 
-// Certifique-se que o caminho para apiService.js está correto
-// 'fazerLogin' está sendo importado de um arquivo externo
-import { fazerLogin } from '../services/apiService'; 
+// CERTIFIQUE-SE QUE VOCÊ IMPORTA AMBAS as funções de apiService.js
+import { fazerLogin, registrarUsuario } from '../services/apiService'; 
 
-// FUNÇÃO DE SERVIÇO DE REGISTRO (PLACEHOLDER - A ser substituída por uma função real de apiService)
-const registrarUsuario = async (data) => {
-    console.warn("AVISO: A função registrarUsuario está usando um placeholder. Verifique sua importação/definição.");
-    
-    // Simula um delay de rede
-    await new Promise(resolve => setTimeout(resolve, 500)); 
-    
-    // Simula um erro de email duplicado
-    if (data.email === "teste@duplicado.com") {
-        return { sucesso: false, mensagem: "Este email já está cadastrado." };
-    }
-    
-    return { sucesso: true, mensagem: "Usuário registrado com sucesso (Placeholder)." };
-};
+// *** REMOVIDO: A função PLACEHOLDER de registrarUsuario foi removida ***
+// *** A função 'registrarUsuario' agora é a que foi importada acima. ***
 
 
 // ==================================================================
@@ -141,7 +128,7 @@ const RegistrationForm = () => {
         setStatus({ mensagem: 'Enviando dados...', sucesso: false });
         setLoading(true);
 
-        // Chama a função de serviço (placeholder)
+        // Chama a função de serviço (AGORA É A IMPORTADA)
         const resultadoAPI = await registrarUsuario(formData); 
 
         if (resultadoAPI.sucesso) {
