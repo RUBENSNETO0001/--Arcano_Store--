@@ -1,22 +1,22 @@
 import '../css/Registro/login.css';
 import React, { useState } from 'react';
+
+// ==================================================================
+// 0. FUNÇÕES DE SERVIÇO (Importação e Placeholder)
+// ==================================================================
+
 // Certifique-se que o caminho para apiService.js está correto
+// 'fazerLogin' está sendo importado de um arquivo externo
 import { fazerLogin } from '../services/apiService'; 
 
-// ------------------------------------------------------------------
-// FUNÇÃO DE SERVIÇO DE REGISTRO (Deve ser importada do apiService.js)
-// Como ela não está definida aqui, usaremos uma função placeholder 
-// que deve ser substituída pela sua chamada real ao backend PHP de registro.
-// ------------------------------------------------------------------
+// FUNÇÃO DE SERVIÇO DE REGISTRO (PLACEHOLDER - A ser substituída por uma função real de apiService)
 const registrarUsuario = async (data) => {
-    // Substitua esta chamada pela sua implementação real:
-    // Exemplo: return await fetch(`${PHP_SERVER_BASE}${PHP_API_URL_REGISTER}`, { ... });
-
-    console.warn("AVISO: A função registrarUsuario está usando um placeholder. Verifique sua importação de apiService.");
+    console.warn("AVISO: A função registrarUsuario está usando um placeholder. Verifique sua importação/definição.");
     
-    // Placeholder: Simulando uma falha ou sucesso no registro
-    await new Promise(resolve => setTimeout(resolve, 500)); // Simula latência de rede
+    // Simula um delay de rede
+    await new Promise(resolve => setTimeout(resolve, 500)); 
     
+    // Simula um erro de email duplicado
     if (data.email === "teste@duplicado.com") {
         return { sucesso: false, mensagem: "Este email já está cadastrado." };
     }
@@ -26,12 +26,13 @@ const registrarUsuario = async (data) => {
 
 
 // ==================================================================
-// 1. COMPONENTE DE LOGIN
+// 1. COMPONENTE DE LOGIN 
 // ==================================================================
-function LoginForm() {
+// Recebe onLoginSuccess como uma prop
+function LoginForm({ onLoginSuccess }) { 
     const [formData, setFormData] = useState({
         email: '',
-        password: '' // Deve ser 'email' e 'password' para bater com o PHP (login.php)
+        password: ''
     });
     const [message, setMessage] = useState(null);
 
@@ -52,14 +53,15 @@ function LoginForm() {
             return;
         }
 
-        // Chama a função de serviço de LOGIN
+        // Chama a função real de serviço (importada)
         const resultado = await fazerLogin(formData); 
-        
         setMessage(resultado);
 
         if (resultado.sucesso) {
             console.log("Login OK:", resultado);
-            // Aqui você faria o redirecionamento ou salvamento de token
+            
+            // Notifica o componente pai (AuthPage) sobre o sucesso
+            onLoginSuccess(); 
         }
     };
 
@@ -72,7 +74,7 @@ function LoginForm() {
                 <input
                     type="email"
                     id="email"
-                    name="email" // NOME CORRETO ESPERADO PELO PHP
+                    name="email"
                     value={formData.email}
                     onChange={handleChange}
                     required
@@ -84,7 +86,7 @@ function LoginForm() {
                 <input
                     type="password"
                     id="password"
-                    name="password" // NOME CORRETO ESPERADO PELO PHP
+                    name="password"
                     value={formData.password}
                     onChange={handleChange}
                     required
@@ -103,7 +105,7 @@ function LoginForm() {
 }
 
 // ==================================================================
-// 2. COMPONENTE DE REGISTRO
+// 2. COMPONENTE DE REGISTRO 
 // ==================================================================
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
@@ -139,13 +141,13 @@ const RegistrationForm = () => {
         setStatus({ mensagem: 'Enviando dados...', sucesso: false });
         setLoading(true);
 
-        // Chama a função de serviço de REGISTRO (usando a função placeholder acima)
+        // Chama a função de serviço (placeholder)
         const resultadoAPI = await registrarUsuario(formData); 
 
-        // Trata o resultado do PHP
         if (resultadoAPI.sucesso) {
             setStatus({ mensagem: `Sucesso: ${resultadoAPI.mensagem}`, sucesso: true });
-            setFormData({ // Limpa os campos
+            // Limpa o formulário após o sucesso
+            setFormData({ 
                 full_name: '', email: '', date_nas: '', 
                 cpf: '', telefone: '', password: '', 
                 confirm_password: ''
@@ -191,11 +193,51 @@ const RegistrationForm = () => {
 // ==================================================================
 // 3. COMPONENTE PRINCIPAL (ÚNICO DEFAULT EXPORT)
 // ==================================================================
+/**
+ * Componente principal que gerencia o estado de visualização (Login/Registro)
+ * e a lógica pós-sucesso do login (armazenamento e redirecionamento).
+ */
 const AuthPage = () => {
+    // isLogin: controla qual formulário está visível
     const [isLogin, setIsLogin] = useState(true);
+    // loginStatus: controla se o usuário está logado (opcional, pode ser removido se o pai gerencia tudo)
+    const [loginStatus, setLoginStatus] = useState(false);
 
+    // Lógica para verificar o estado inicial (do localStorage)
+    React.useEffect(() => {
+        // Verifica se há um token ou flag de login no localStorage ao carregar
+        if (localStorage.getItem('usuarioLogado') === 'true') {
+            setLoginStatus(true);
+        } else {
+            setLoginStatus(false);
+        }
+    }, []);
+
+    /**
+     * Função chamada pelo LoginForm em caso de sucesso.
+     * Realiza as ações finais de autenticação.
+     */
+    const handleLoginSuccess = () => {
+        setLoginStatus(true); 
+        localStorage.setItem('usuarioLogado', 'true'); 
+        alert("Login realizado com sucesso!");
+        
+        // Redirecionamento (ajuste para sua lógica de roteamento real)
+        window.location.href = '/index.html'; 
+    };
+
+    // Se o usuário já estiver logado, pode-se renderizar uma mensagem ou redirecionar
+    if (loginStatus) {
+        return (
+            <div className="login_Registro">
+                <p>Você já está logado. Redirecionando...</p>
+            </div>
+        );
+    }
+    
     return (
         <div className="login_Registro">
+            {/* Botões de alternância entre Login e Registro */}
             <div className="toggle-buttons">
                 <button 
                     onClick={() => setIsLogin(true)} 
@@ -210,10 +252,15 @@ const AuthPage = () => {
                     Registro
                 </button>
             </div>
-            {isLogin ? <LoginForm /> : <RegistrationForm />}
+            
+            {/* Renderiza o formulário ativo */}
+            {isLogin ? (
+                <LoginForm onLoginSuccess={handleLoginSuccess} />
+            ) : (
+                <RegistrationForm />
+            )}
         </div>
     );
 };
 
-// ÚNICO DEFAULT EXPORT para evitar o erro de compilação
 export default AuthPage;

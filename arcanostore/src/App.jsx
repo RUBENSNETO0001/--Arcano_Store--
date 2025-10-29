@@ -4,19 +4,19 @@ import Footer from './componentes_principais/Footer';
 import Home from './componetes_secundarios/Main_home';
 import Sobre from './componentes_principais/links/sobrenos';
 import ProductDetailPage from './componetes_secundarios/Main_comprar'; 
-import { verificarEstadoInicial, atualizarInterfaceAposLogin } from './services/button-login-carrinho';
 import { fazerLogin } from './services/apiService'; 
-
-document.addEventListener('DOMContentLoaded', verificarEstadoInicial);
 
 function App() {
     const [activeView, setActiveView] = useState('home'); 
     const [selectedProductId, setSelectedProductId] = useState(null); 
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para o login
 
+    // Efeito para verificar o estado de login ao carregar (lendo o localStorage)
     useEffect(() => {
         if (localStorage.getItem('usuarioLogado') === 'true') {
             setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
         }
     }, []);
 
@@ -41,12 +41,13 @@ function App() {
         const resultado = await fazerLogin(loginData);
 
         if (resultado.sucesso) {
-            setIsLoggedIn(true);
-            // Chama a função de controle do DOM para ocultar o botão de login instantaneamente
-            atualizarInterfaceAposLogin(); 
+            localStorage.setItem('usuarioLogado', 'true');
+            setIsLoggedIn(true); 
             
             alert("Login realizado com sucesso!");
-            window.location.href = '/index.html';
+            
+            // Redirecionamento (Pode ser removido se o login for um modal na mesma página)
+            window.location.href = '/index.html'; 
         } else {
             alert(resultado.mensagem);
         }
@@ -74,7 +75,7 @@ function App() {
         <div className="body">
             <Header 
                 onNavigate={handleNavigation} 
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={isLoggedIn} // Passa o estado para o Header
                 onLogin={handleLoginProcess}
             />
             {renderContent()}

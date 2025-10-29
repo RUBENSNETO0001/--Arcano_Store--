@@ -59,13 +59,11 @@ body {
 
 /* Botão da Logo */
 .navbar-logo-button { 
-    /* Estilos para remover a aparência padrão de botão e fazer parecer um link/logo */
     background: none;
     border: none;
     padding: 0;
     cursor: pointer;
     
-    /* Estilos do conteúdo interno */
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -73,7 +71,7 @@ body {
     font-weight: 700;
     font-size: 1.5rem;
     transition: var(--transition);
-    font-family: 'Poppins', sans-serif; /* Garante que a fonte seja aplicada */
+    font-family: 'Poppins', sans-serif;
 }
 
 .navbar-logo-button:hover {
@@ -106,20 +104,17 @@ body {
 
 /* Estilização para o <button> com a classe navbar-link */
 .navbar-link {
-    /* Resetando o estilo padrão do botão */
     background: none;
     border: none;
-    
-    /* Estilizando como link */
     text-decoration: none;
     color: var(--text-color);
     font-weight: 500;
     padding: 0.5rem 0;
     position: relative;
-    cursor: pointer; /* Essencial para botões que agem como links */
+    cursor: pointer;
     transition: var(--transition);
-    font-family: 'Poppins', sans-serif; /* Garante que a fonte seja aplicada */
-    font-size: 1rem; /* Garante o tamanho correto */
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
 }
 
 .navbar-link:hover {
@@ -141,7 +136,7 @@ body {
     width: 100%;
 }
 
-/* Botão CTA (Permanece como <button>, sem alterações necessárias) */
+/* Botão CTA (Login/Carrinho) */
 .navbar-cta .cta-button {
     background: var(--primary-color);
     color: white;
@@ -152,7 +147,7 @@ body {
     cursor: pointer;
     transition: var(--transition);
     box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
-    font-family: 'Poppins', sans-serif; 
+    font-family: 'Poppins', sans-serif;
 }
 
 .navbar-cta .cta-button:hover {
@@ -160,6 +155,8 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
 }
+
+/* Estilo extra que parece ter sido adicionado/remanescente */
 .navbar-cta2 .navbar-cart-button{
     display: none;
     background: var(--primary-color);
@@ -208,7 +205,7 @@ body {
     transform: rotate(45deg) translate(-5px, -6px);
 }
 
-/* Overlay (Sem alterações) */
+/* Overlay (Para o Menu Mobile) */
 .mobile-overlay {
     position: fixed;
     top: 0;
@@ -247,7 +244,7 @@ body {
     right: 0;
 }
 
-/* Header do Menu Mobile (Mantenho para fins de organização, mesmo que não esteja sendo usado) */
+/* Header do Menu Mobile */
 .mobile-menu-header {
     display: flex;
     justify-content: space-between;
@@ -299,15 +296,13 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* Estilização para o <button> e <a> com a classe mobile-link */
+/* Estilização para o <button> com a classe mobile-link */
 .mobile-link {
-    /* Adicionado para suportar <button> sem quebrar <a> (se houver) */
     background: none;
     border: none;
     font-family: 'Poppins', sans-serif;
     font-size: 1rem; 
     
-    /* Estilos do link */
     display: flex;
     align-items: center;
     text-decoration: none;
@@ -386,7 +381,7 @@ body {
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
 }
 
-/* Animações (Sem alterações) */
+/* Animações */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -424,7 +419,7 @@ body {
 .mobile-item:nth-child(4) { animation-delay: 0.25s; }
 .mobile-item:nth-child(5) { animation-delay: 0.3s; }
 
-/* Responsividade (Sem alterações) */
+/* Responsividade */
 @media screen and (max-width: 968px) {
     .navbar-menu, .navbar-cta, .cta-button {
         display: none;
@@ -470,7 +465,7 @@ body {
     }
 }
 
-/* Scroll personalizado (Sem alterações) */
+/* Scroll personalizado (para o menu mobile) */
 .mobile-menu::-webkit-scrollbar {
     width: 4px;
 }
