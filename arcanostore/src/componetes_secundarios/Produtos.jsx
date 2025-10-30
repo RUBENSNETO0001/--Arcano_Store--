@@ -1,5 +1,3 @@
-//fazer uma tabela no banco para esse serviço
-// objeto dos produtos
 const featuredProductsData = [
   {
     id: 1,

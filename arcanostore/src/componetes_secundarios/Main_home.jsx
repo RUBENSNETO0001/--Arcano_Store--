@@ -1,18 +1,12 @@
 import React from 'react';
 import '../css/Main/Main.css';
-// Altere o caminho se o seu arquivo de produtos estiver em outra pasta
 import { featuredProductsData, categoriesData } from './Produtos';
 
-// Renomeando para facilitar a leitura no JSX:
 const featuredProducts = featuredProductsData;
 const categories = categoriesData;
 
-// CORREÇÃO: Adicionando 'onViewProduct' como prop desestruturada
 const Main = ({ onViewProduct }) => {
-
-  // Encontrando o produto mais vendido para a Hero Section
   const bestSellerProduct = featuredProducts.find(p => p.bestseller) || featuredProducts[0];
-
   const scrollToProducts = (e) => {
     e.preventDefault();
 

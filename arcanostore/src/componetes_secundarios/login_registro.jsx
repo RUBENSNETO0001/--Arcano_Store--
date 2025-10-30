@@ -1,22 +1,8 @@
 import '../css/Registro/login.css';
 import React, { useState } from 'react';
+import { fazerLogin, registrarUsuario } from '../services/apiService';
 
-// ==================================================================
-// 0. FUNÇÕES DE SERVIÇO (CORREÇÃO: Importação correta)
-// ==================================================================
-
-// CERTIFIQUE-SE QUE VOCÊ IMPORTA AMBAS as funções de apiService.js
-import { fazerLogin, registrarUsuario } from '../services/apiService'; 
-
-// *** REMOVIDO: A função PLACEHOLDER de registrarUsuario foi removida ***
-// *** A função 'registrarUsuario' agora é a que foi importada acima. ***
-
-
-// ==================================================================
-// 1. COMPONENTE DE LOGIN 
-// ==================================================================
-// Recebe onLoginSuccess como uma prop
-function LoginForm({ onLoginSuccess }) { 
+function LoginForm({ onLoginSuccess }) {
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -33,7 +19,7 @@ function LoginForm({ onLoginSuccess }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setMessage(null); 
+        setMessage(null);
 
         if (!formData.email || !formData.password) {
             setMessage({ sucesso: false, mensagem: "Por favor, preencha o Email e a Senha." });
@@ -41,47 +27,29 @@ function LoginForm({ onLoginSuccess }) {
         }
 
         // Chama a função real de serviço (importada)
-        const resultado = await fazerLogin(formData); 
+        const resultado = await fazerLogin(formData);
         setMessage(resultado);
 
         if (resultado.sucesso) {
             console.log("Login OK:", resultado);
-            
+
             // Notifica o componente pai (AuthPage) sobre o sucesso
-            onLoginSuccess(); 
+            onLoginSuccess();
         }
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <h2>Login</h2>
-            
             <div>
                 <label htmlFor="email">Email:</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                />
+                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
             </div>
-
             <div>
                 <label htmlFor="password">Senha:</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    required
-                />
+                <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} required />
             </div>
-
             <button type="submit">Entrar</button>
-
             {message && (
                 <div style={{ color: message.sucesso ? 'green' : 'red', marginTop: '10px' }}>
                     {message.mensagem}
@@ -91,17 +59,14 @@ function LoginForm({ onLoginSuccess }) {
     );
 }
 
-// ==================================================================
-// 2. COMPONENTE DE REGISTRO 
-// ==================================================================
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
-        full_name: '', 
-        email: '', 
-        date_nas: '', 
-        cpf: '', 
-        telefone: '', 
-        password: '', 
+        full_name: '',
+        email: '',
+        date_nas: '',
+        cpf: '',
+        telefone: '',
+        password: '',
         confirm_password: ''
     });
     const [status, setStatus] = useState({ mensagem: '', sucesso: false });
@@ -117,7 +82,7 @@ const RegistrationForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         setStatus({ mensagem: '', sucesso: false });
 
         if (formData.password !== formData.confirm_password) {
@@ -129,14 +94,14 @@ const RegistrationForm = () => {
         setLoading(true);
 
         // Chama a função de serviço (AGORA É A IMPORTADA)
-        const resultadoAPI = await registrarUsuario(formData); 
+        const resultadoAPI = await registrarUsuario(formData);
 
         if (resultadoAPI.sucesso) {
             setStatus({ mensagem: `Sucesso: ${resultadoAPI.mensagem}`, sucesso: true });
             // Limpa o formulário após o sucesso
-            setFormData({ 
-                full_name: '', email: '', date_nas: '', 
-                cpf: '', telefone: '', password: '', 
+            setFormData({
+                full_name: '', email: '', date_nas: '',
+                cpf: '', telefone: '', password: '',
                 confirm_password: ''
             });
         } else {
@@ -146,48 +111,40 @@ const RegistrationForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} method='POST'> 
+        <form onSubmit={handleSubmit} method='POST'>
             <h1>Registro</h1>
             <label htmlFor="register-name">Nome Completo</label>
             <input type="text" id="register-name" name="full_name" value={formData.full_name} onChange={handleChange} required />
-            
+
             <label htmlFor="register-email">Email</label>
             <input type="email" id="register-email" name="email" value={formData.email} onChange={handleChange} required />
-            
+
             <label htmlFor="register-dataNascimento">Data de Nascimento</label>
-            <input type="date" id="register-dataNascimento" name='date_nas' value={formData.date_nas} onChange={handleChange} required/>
+            <input type="date" id="register-dataNascimento" name='date_nas' value={formData.date_nas} onChange={handleChange} required />
 
             <label htmlFor="register-cpf">CPF</label>
-            <input type="text" id="register-cpf" name="cpf" value={formData.cpf} onChange={handleChange} required maxLength={11}/>
+            <input type="text" id="register-cpf" name="cpf" value={formData.cpf} onChange={handleChange} required maxLength={11} />
 
             <label htmlFor="register-telefone">Telefone</label>
-            <input type="text" id="register-telefone" name="telefone" value={formData.telefone} onChange={handleChange} required maxLength={12}/> 
+            <input type="text" id="register-telefone" name="telefone" value={formData.telefone} onChange={handleChange} required maxLength={12} />
 
             <label htmlFor="register-password">Senha</label>
-            <input type="password" id="register-password" name="password" value={formData.password} onChange={handleChange} required minLength={5}/>
-            
+            <input type="password" id="register-password" name="password" value={formData.password} onChange={handleChange} required minLength={5} />
+
             <label htmlFor="register-confirm-password">Confirmação de Senha</label>
-            <input type="password" id="register-confirm-password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} required minLength={5}/>
-            
+            <input type="password" id="register-confirm-password" name="confirm_password" value={formData.confirm_password} onChange={handleChange} required minLength={5} />
+
             <input type="submit" value={loading ? "Cadastrando..." : "Cadastrar"} disabled={loading} />
-            
+
             {status.mensagem && <p className={status.sucesso ? 'success' : 'error'}>{status.mensagem}</p>}
         </form>
     );
 };
 
 
-// ==================================================================
-// 3. COMPONENTE PRINCIPAL (ÚNICO DEFAULT EXPORT)
-// ==================================================================
-/**
- * Componente principal que gerencia o estado de visualização (Login/Registro)
- * e a lógica pós-sucesso do login (armazenamento e redirecionamento).
- */
 const AuthPage = () => {
-    // isLogin: controla qual formulário está visível
+
     const [isLogin, setIsLogin] = useState(true);
-    // loginStatus: controla se o usuário está logado (opcional, pode ser removido se o pai gerencia tudo)
     const [loginStatus, setLoginStatus] = useState(false);
 
     // Lógica para verificar o estado inicial (do localStorage)
@@ -200,17 +157,16 @@ const AuthPage = () => {
         }
     }, []);
 
-    /**
-     * Função chamada pelo LoginForm em caso de sucesso.
-     * Realiza as ações finais de autenticação.
-     */
+
+    // Função chamada pelo LoginForm em caso de sucesso.
+    // Realiza as ações finais de autenticação.
     const handleLoginSuccess = () => {
-        setLoginStatus(true); 
-        localStorage.setItem('usuarioLogado', 'true'); 
+        setLoginStatus(true);
+        localStorage.setItem('usuarioLogado', 'true');
         alert("Login realizado com sucesso!");
-        
+
         // Redirecionamento (ajuste para sua lógica de roteamento real)
-        window.location.href = '/index.html'; 
+        window.location.href = '/index.html';
     };
 
     // Se o usuário já estiver logado, pode-se renderizar uma mensagem ou redirecionar
@@ -221,25 +177,14 @@ const AuthPage = () => {
             </div>
         );
     }
-    
+
     return (
         <div className="login_Registro">
-            {/* Botões de alternância entre Login e Registro */}
             <div className="toggle-buttons">
-                <button 
-                    onClick={() => setIsLogin(true)} 
-                    style={{ fontWeight: isLogin ? 'bold' : 'normal' }}
-                >
-                    Login
-                </button>
-                <button 
-                    onClick={() => setIsLogin(false)} 
-                    style={{ fontWeight: !isLogin ? 'bold' : 'normal' }}
-                >
-                    Registro
-                </button>
+                <button onClick={() => setIsLogin(true)} style={{ fontWeight: isLogin ? 'bold' : 'normal' }}>Login</button>
+                <button onClick={() => setIsLogin(false)} style={{ fontWeight: !isLogin ? 'bold' : 'normal' }}>Registro</button>
             </div>
-            
+
             {/* Renderiza o formulário ativo */}
             {isLogin ? (
                 <LoginForm onLoginSuccess={handleLoginSuccess} />

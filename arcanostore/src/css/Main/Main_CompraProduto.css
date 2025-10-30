@@ -1,6 +1,4 @@
-/* ====================================
-   1. Variáveis Globais (Ajuste suas Cores)
-   ==================================== */
+
 :root {
     --primary-color: #9c27b0;
     /* Roxo Mágico (Principal) */
@@ -17,9 +15,6 @@
     --transition-speed: 0.3s;
 }
 
-/* ====================================
-       2. Estrutura da Página e Layout
-       ==================================== */
 .product-detail-page {
     padding: 110px 20px;
     /* Mais padding no topo e laterais */
@@ -59,9 +54,6 @@
     flex-wrap: wrap;
 }
 
-/* ====================================
-       3. Coluna de Imagens e Galeria
-       ==================================== */
 .product-images {
     flex: 1;
     min-width: 350px;
@@ -116,9 +108,6 @@
     transform: scale(1.05);
 }
 
-/* ====================================
-       4. Coluna de Informações (Painel)
-       ==================================== */
 .product-info-panel {
     flex: 1.5;
     min-width: 400px;
@@ -184,9 +173,6 @@ hr {
     margin: 30px 0;
 }
 
-/* ====================================
-       5. Ações de Compra e Botões
-       ==================================== */
 .product-purchase-actions {
     display: flex;
     align-items: center;
@@ -260,9 +246,6 @@ hr {
 }
 
 
-/* ====================================
-       6. Badges e Informações Adicionais
-       ==================================== */
 .shipping-info {
     margin-top: 25px;
     padding: 20px;
@@ -282,9 +265,6 @@ hr {
     font-size: 1.2em;
 }
 
-/* ====================================
-       7. Media Query (Responsividade)
-       ==================================== */
 @media (max-width: 992px) {
     .product-detail-layout {
         gap: 30px;

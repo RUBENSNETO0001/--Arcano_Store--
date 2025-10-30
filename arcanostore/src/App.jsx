@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Header from './componentes_principais/Navbar';
+import Header from './componentes_principais/Header';
 import Footer from './componentes_principais/Footer';
 import Home from './componetes_secundarios/Main_home';
 import Sobre from './componentes_principais/links/sobrenos';

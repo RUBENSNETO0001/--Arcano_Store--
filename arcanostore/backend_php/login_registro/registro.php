@@ -15,10 +15,7 @@
         exit(0);
     }
 
-    // Garante que a resposta será JSON - ESSA LINHA DEVE SER EXECUTADA COM SUCESSO!!!!!!!!!!!!!!!!!!!!!!!
     header("Content-Type: application/json; charset=UTF-8"); 
-
-    // Assumindo que registro.php está em /login_registro/ e conexao.php está em /conexao_banco_de_dados/
     $caminho_conexao = dirname(__DIR__) . '/conexao_banco_de_dados/conexao.php';
 
     if (!file_exists($caminho_conexao)) {
@@ -26,10 +23,8 @@
         echo json_encode(["sucesso" => false, "mensagem" => "Erro Fatal: Arquivo de conexão não encontrado. Caminho testado: " . $caminho_conexao ]);
         exit(); 
     }
-
     include $caminho_conexao;
 
-    // classe do registro
     class RegistroDao {
         
         public static function verify_password($a, $b) {
