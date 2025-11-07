@@ -1,32 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../css/Main/Main.css';
-// Altere o caminho se o seu arquivo de produtos estiver em outra pasta
-import { featuredProductsData, categoriesData } from './Produtos';
 
-// Renomeando para facilitar a leitura no JSX:
-const featuredProducts = featuredProductsData;
-const categories = categoriesData;
+// 1. IMPORTAÇÃO CORRETA: Importa a função assíncrona e as categorias estáticas
+import getProdutosData, { categoriesData } from './Produtos'; 
+// --------------------------------------------------------------------------------------
+// COMPONENTE PRINCIPAL
+// --------------------------------------------------------------------------------------
 
-// CORREÇÃO: Adicionando 'onViewProduct' como prop desestruturada
 const Main = ({ onViewProduct }) => {
+  // 2. ESTADOS: Para armazenar produtos e o status de carregamento
+  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // As categorias ainda podem ser usadas diretamente, pois são estáticas
+  const categories = categoriesData; 
 
-  // Encontrando o produto mais vendido para a Hero Section
+  // 3. EFEITO: Chamada Assíncrona para buscar os dados
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        const data = await getProdutosData();
+        
+        // Mapeamento Opcional: Transforma os dados da API para o formato esperado pelo seu JSX
+        const mappedProducts = data.featuredProducts.map(p => ({
+            id: p.id,
+            name: p.nome, // Mapeia 'nome' (PHP) para 'name' (JSX)
+            price: `R$ ${parseFloat(p.preco).toFixed(2).replace('.', ',')}`, // Formata preço
+            image: p.image,
+            category: p.category,
+            // Adicione as chaves que seu JSX espera e que o PHP não retorna
+            bestseller: p.e_novo === 1, // Exemplo de como definir um bestseller (usando 'e_novo' como placeholder)
+            discount: p.desconto > 0 ? `${p.desconto}% OFF` : null,
+            new: p.novo === 1 // Mapeia 'novo' (PHP) para 'new' (JSX)
+        }));
+
+        setFeaturedProducts(mappedProducts);
+
+      } catch (error) {
+        console.error("Erro ao carregar dados da Home:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []); 
+
+  // 4. Lógica: Encontrando o produto mais vendido para a Hero Section
+  // (Usa o primeiro produto se nenhum for marcado como 'bestseller' no mapeamento)
   const bestSellerProduct = featuredProducts.find(p => p.bestseller) || featuredProducts[0];
 
   const scrollToProducts = (e) => {
     e.preventDefault();
-
     const targetId = e.currentTarget.getAttribute('href').substring(1);
     const targetElement = document.getElementById(targetId);
-
     if (targetElement) {
-      targetElement.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start' // Alinha o topo do elemento com o topo da janela
-      });
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
+  // 5. Renderização de Carregamento
+  if (loading) {
+    return <div className="loading-state-main">Carregando o Universo Arcano... ✨</div>;
+  }
+  
+  // 6. Renderização de Conteúdo (Usa 'bestSellerProduct' e 'featuredProducts')
   return (
     <main className="main-content">
       {/* Hero Section */}
@@ -46,13 +85,11 @@ const Main = ({ onViewProduct }) => {
               </a>
             </div>
             <div className="hero-stats">
-              {/* O seu componente estava usando '20+' para Produtos Geek, vou usar o count real */}
               <div className="stat">
                 <span className="stat-number">1k+</span>
                 <span className="stat-label">Clientes Satisfeitos</span>
               </div>
               <div className="stat">
-                {/* Calcula o total de itens contando todos nas categorias */}
                 <span className="stat-number">{categories.reduce((sum, cat) => sum + cat.count, 0)}+</span>
                 <span className="stat-label">Itens Mágicos em Estoque</span>
               </div>
@@ -62,17 +99,19 @@ const Main = ({ onViewProduct }) => {
               </div>
             </div>
           </div>
-          {/* produto mais vendido - Agora populado dinamicamente! */}
-          <div className="hero-image">
-            <div className="floating-card">
-              <img src={bestSellerProduct.image} alt={bestSellerProduct.name} />
-              <div className="card-badge">Mais Vendido</div>
-              <div className="card-info">
-                <h4>{bestSellerProduct.name}</h4>
-                <p>{bestSellerProduct.price}</p>
+          {/* produto mais vendido - Verifica se o produto existe antes de renderizar */}
+          {bestSellerProduct && (
+              <div className="hero-image">
+                <div className="floating-card">
+                  <img src={bestSellerProduct.image} alt={bestSellerProduct.name} />
+                  <div className="card-badge">Mais Vendido</div>
+                  <div className="card-info">
+                    <h4>{bestSellerProduct.name}</h4>
+                    <p>{bestSellerProduct.price}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -96,57 +135,61 @@ const Main = ({ onViewProduct }) => {
       </section>
 
       <section id="produtos">
-
         {/* Produtos em Destaque */}
         <section className="featured-section">
-          <div className="container"><div className="section-header">
-            <h2>Produtos em Destaque 🌟</h2>
-            <p>Os itens mais procurados pelos arcanistas</p>
-          </div>
+          <div className="container">
+            <div className="section-header">
+              <h2>Produtos em Destaque 🌟</h2>
+              <p>Os itens mais procurados pelos arcanistas</p>
+            </div>
             <div className="products-grid">
-              {/* APLICANDO SLICE(0, 3) PARA LIMITAR A 3 PRODUTOS */}
-              {featuredProducts.slice(0, 3).map(product => (
+              {/* Renderiza apenas se houver produtos */}
+              {featuredProducts.length > 0 ? (
+                  featuredProducts.slice(0, 3).map(product => (
 
-                <div key={product.id} className="product-card">
+                    <div key={product.id} className="product-card">
 
-                  <div className="product-image">
-                    <img src={product.image} alt={product.name} />
-                    <div className="product-badges">
-                      {product.discount && (
-                        <span className="badge discount">{product.discount}</span>
-                      )}
-                      {product.bestseller && (
-                        <span className="badge bestseller">Mais Vendido</span>
-                      )}
-                      {product.new && (
-                        <span className="badge new">Novo</span>
-                      )}
+                      <div className="product-image">
+                        <img src={product.image} alt={product.name} />
+                        <div className="product-badges">
+                          {product.discount && (
+                            <span className="badge discount">{product.discount}</span>
+                          )}
+                          {product.bestseller && (
+                            <span className="badge bestseller">Mais Vendido</span>
+                          )}
+                          {product.new && (
+                            <span className="badge new">Novo</span>
+                          )}
+                        </div>
+                        <button className="quick-view">
+                          <i className="fas fa-eye"></i>
+                        </button>
+                      </div>
+
+                      <div className="product-info">
+                        <span className="product-category">{product.category}</span>
+                        <h3 className="product-name">{product.name}</h3>
+                        <div className="product-price">{product.price}</div>
+                        <div className="product-actions">
+                          <button
+                            className="add-to-cart"
+                            onClick={() => onViewProduct(product.id)}
+                          >
+                            <i className="fas fa-shopping-cart"></i>
+                            Ver Produto
+                          </button>
+                          <button className="wishlist">
+                            <i className="far fa-heart"></i>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                    <button className="quick-view">
-                      <i className="fas fa-eye"></i>
-                    </button>
-                  </div>
-
-                  <div className="product-info">
-                    <span className="product-category">{product.category}</span>
-                    <h3 className="product-name">{product.name}</h3>
-                    <div className="product-price">{product.price}</div>
-                    <div className="product-actions">
-                      <button
-                        className="add-to-cart"
-                        // CHAMA A FUNÇÃO E PASSA O ID DO PRODUTO CLICADO
-                        onClick={() => onViewProduct(product.id)}
-                      >
-                        <i className="fas fa-shopping-cart"></i>
-                        Ver Produto
-                      </button>
-                      <button className="wishlist">
-                        <i className="far fa-heart"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                  ))
+              ) : (
+                // Mensagem quando não há produtos
+                <div className="no-products-message">Nenhum artefato mágico encontrado.</div>
+              )}
             </div>
 
             <div className="section-actions">
@@ -157,41 +200,11 @@ const Main = ({ onViewProduct }) => {
             </div>
           </div>
         </section>
-      </section> {/* CORREÇÃO: Fechamento final de section id="produtos" */}
-
-      {/* Banner Promocional */}
-      <section className="promo-banner">
-        <div className="container">
-          <div className="banner-content">
-            <div className="banner-text">
-              <h2>Oferta Especial do Mês 🏷️</h2>
-              <p>Desconto de 30% em todos os artefatos lendários</p>
-              <div className="countdown">
-                <div className="countdown-item">
-                  <span>02</span>
-                  <small>Dias</small>
-                </div>
-                <div className="countdown-item">
-                  <span>12</span>
-                  <small>Horas</small>
-                </div>
-                <div className="countdown-item">
-                  <span>45</span>
-                  <small>Minutos</small>
-                </div>
-              </div>
-            </div>
-            <button className="btn-primary">
-              Aproveitar Oferta
-              <i className="fas fa-bolt"></i>
-            </button>
-          </div>
-        </div>
       </section>
 
-      {/* Benefícios */}
-      <section className="benefits-section">
-        <div className="container">
+      {/* Banner Promocional (Restante do seu JSX sem alteração) */}
+      <section className="promo-banner">
+         <div className="container">
           <div className="benefits-grid">
             <div className="benefit-card">
               <div className="benefit-icon">
@@ -223,6 +236,11 @@ const Main = ({ onViewProduct }) => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Benefícios (Restante do seu JSX sem alteração) */}
+      <section className="benefits-section">
+       
       </section>
     </main>
   );

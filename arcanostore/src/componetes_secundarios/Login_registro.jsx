@@ -80,7 +80,7 @@ function LoginForm({ onLoginSuccess }) {
                 />
             </div>
 
-            <button type="submit">Entrar</button>
+            <button type="submit" className='btn_login'>Login</button>
 
             {message && (
                 <div style={{ color: message.sucesso ? 'green' : 'red', marginTop: '10px' }}>

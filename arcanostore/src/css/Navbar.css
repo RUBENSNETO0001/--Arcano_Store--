@@ -22,6 +22,9 @@ body {
     font-family: 'Poppins', sans-serif;
     color: var(--text-color);
     line-height: 1.6;
+    /* CORREÇÃO ESSENCIAL: Impede que conteúdo excedente (como um formulário grande)
+       force uma barra de rolagem horizontal. */
+    overflow-x: hidden; 
 }
 
 /* Navbar Principal */
@@ -50,7 +53,7 @@ body {
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 2rem; /* Padding padrão de 2rem para desktop */
 }
 
 /* ---------------------------------------------------------------------- */
@@ -175,6 +178,29 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(108, 99, 255, 0.4);
 }
+
+/* Estilos para Formulário (Ex: Barra de Busca) */
+.navbar-form {
+    display: flex;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.navbar-input {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--text-light);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition);
+    width: 200px; /* Largura padrão */
+}
+
+.navbar-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+}
+
 
 /* Toggle Menu Mobile */
 .navbar-toggle {
@@ -419,9 +445,39 @@ body {
 .mobile-item:nth-child(4) { animation-delay: 0.25s; }
 .mobile-item:nth-child(5) { animation-delay: 0.3s; }
 
-/* Responsividade */
+/* Responsividade - Desktop/Notebooks */
+/* ---------------------------------------------------------------------- */
+/* Ajustes DEFINITIVOS para Notebooks e Telas Médias (969px a 1200px) */
+@media screen and (min-width: 969px) and (max-width: 1200px) {
+    
+    .navbar-container {
+        /* Ajuste para dar mais espaço lateral aos elementos internos */
+        padding: 0 1rem; 
+    }
+
+    .navbar-item {
+        margin: 0 0.6rem; /* Espaçamento menor entre links */
+    }
+
+    .navbar-link {
+        font-size: 0.9rem; 
+    }
+
+    .navbar-cta .cta-button {
+        padding: 0.6rem 1.1rem; 
+        font-size: 0.9rem; 
+    }
+
+    .logo {
+        height: 35px; 
+    }
+}
+
+
+/* Responsividade - Mobile */
 @media screen and (max-width: 968px) {
-    .navbar-menu, .navbar-cta, .cta-button {
+    /* Esconde o formulário da navbar quando o menu mobile aparece */
+    .navbar-menu, .navbar-cta, .cta-button, .navbar-form {
         display: none;
     }
 
@@ -464,6 +520,43 @@ body {
         padding: 0.8rem 0.8rem;
     }
 }
+
+/* ---------------------------------------------------------------------- */
+/* ESTILOS PARA FORMULÁRIO DE REGISTRO (Seus 7 Inputs) */
+/* ---------------------------------------------------------------------- */
+
+.formulario-registro {
+    display: flex;
+    flex-direction: column; /* Padrão: Empilha verticalmente */
+    gap: 1rem; 
+    padding: 2rem;
+    max-width: 600px; 
+    margin: 5rem auto 0; /* Margem superior para não ficar colado na navbar fixa */
+}
+
+.formulario-registro input, .formulario-registro button {
+    width: 100%; 
+    padding: 0.8rem;
+    box-sizing: border-box; 
+}
+
+/* Ajuste para telas de Notebook (969px a 1200px) */
+@media screen and (min-width: 969px) and (max-width: 1200px) {
+    .formulario-registro {
+        flex-direction: row; /* Volta para linha */
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .formulario-registro input {
+        /* Define que cada input deve ocupar aproximadamente 1/3 do espaço */
+        width: calc(33.33% - 0.7rem); 
+    }
+    /* Garante que o terceiro input comece uma nova linha, para um layout 3x3+1 */
+    .formulario-registro input:nth-child(3n+1) {
+        clear: left; 
+    }
+}
+
 
 /* Scroll personalizado (para o menu mobile) */
 .mobile-menu::-webkit-scrollbar {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Navbar.css';
-import AuthPage from '../componetes_secundarios/login_registro'; // Importa o modal de autenticação
+import AuthPage from '../componetes_secundarios/Login_registro'; // Importa o modal de autenticação
 import Contato from './links/contato';
 
 const Navbar = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout }) => {
