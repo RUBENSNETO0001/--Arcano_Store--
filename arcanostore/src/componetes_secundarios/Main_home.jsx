@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import getProdutosData, { categoriesData } from './Produtos'; 
 import '../css/Main/Main.css';
-// --------------------------------------------------------------------------------------
-// COMPONENTE PRINCIPAL
-// --------------------------------------------------------------------------------------
 
 const Main = ({ onViewProduct }) => {
   // 2. ESTADOS: Para armazenar produtos e o status de carregamento

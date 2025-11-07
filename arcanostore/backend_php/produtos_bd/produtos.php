@@ -1,9 +1,4 @@
 <?php
-// produtos.php (Localizado em /arcanostore/backend_php/produtos_bd/produtos.php)
-
-    // ***************************************************************
-    // CORREÇÃO CORS: ESSENCIAL
-    // ***************************************************************
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
@@ -19,27 +14,15 @@
         http_response_code(200);
         exit();
     }
-    
-    // ------------------------------------------------------------------   
-    // 1. INCLUSÃO DE ARQUIVOS NECESSÁRIOS
-    // ------------------------------------------------------------------
     // O caminho deve ser relativo ao produtos.php
     include '../conexao_banco_de_dados/conexao.php'; // Ajuste o caminho conforme necessário
     
-    // ------------------------------------------------------------------   
-    // 2. TESTE DE CONEXÃO (Se falhar, retorna erro 500 para o React)
-    // ------------------------------------------------------------------
-    if (!$conexao_db) {
+    if (!$conexao) {
         http_response_code(500); 
         echo json_encode(["sucesso" => false, "mensagem" => "Erro de Conexão com o Banco de Dados. Verifique o conexao.php."]);
         exit();
     }
-
-
-    // ------------------------------------------------------------------   
-    // 3. QUERY SQL E EXECUÇÃO
-    // ------------------------------------------------------------------
-    // Sua query para buscar dados de produto, categoria e itens
+    // query para buscar dados de produto, categoria e itens
     $produtos_query = "
         SELECT
             p.id_produto AS id,
@@ -58,20 +41,16 @@
             produto_itens pi ON p.id_produto = pi.id_produto
     ";
     
-    $resultado = $conexao_db->query($produtos_query);
+    $resultado = $conexao->query($produtos_query);
 
     // TESTE DE QUERY
     if (!$resultado) {
         http_response_code(500);
-        echo json_encode(["sucesso" => false, "mensagem" => "Erro na Query SQL: " . $conexao_db->error]);
+        echo json_encode(["sucesso" => false, "mensagem" => "Erro na Query SQL: " . $conexao->error]);
         exit();
     }
     
     $produtos = array();
-
-    // ------------------------------------------------------------------   
-    // 4. PROCESSAMENTO E RETORNO DE DADOS
-    // ------------------------------------------------------------------
     if ($resultado->num_rows > 0) {
         while ($row = $resultado->fetch_assoc()) {
             $produtos[] = $row;

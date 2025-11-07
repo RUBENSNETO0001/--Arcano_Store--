@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../css/Main/Main_CompraProduto.css';
-
-// 1. Importação Essencial:
-// Certifique-se de que esta função está exportada em 'api_produtos.js'
 import { fetchProdutoPorId } from '../services/api_produtos'; 
-
+import '../css/Main/Main_CompraProduto.css';
 
 const ProductDetailPage = ({ productId = 1 }) => { 
   // O componente pode receber o 'productId' via props ou via URL (se você usar React Router)
@@ -79,7 +75,6 @@ const ProductDetailPage = ({ productId = 1 }) => {
     }
   };
 
-  // --- Renderização de Status ---
   if (loading) {
     return <div className="loading-state">Carregando Detalhes do Produto...</div>;
   }
@@ -88,7 +83,6 @@ const ProductDetailPage = ({ productId = 1 }) => {
     return <div className="error-state">Produto Não Encontrado. 😥 Verifique se a **API** e o **ID do Produto** estão corretos!</div>;
   }
 
-  // --- Renderização do Conteúdo ---
   return (
     <div className="product-detail-page container">
       <div className="product-detail-layout">

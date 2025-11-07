@@ -1,4 +1,4 @@
-const PHP_API_URL_BASE = '/--Arcano_Store--/arcanostore/backend_php/produtos_bd/produtos.php'; 
+const PHP_API_URL_BASE = 'http/localhost/--Arcano_Store--/arcanostore/backend_php/produtos_bd/produtos.php'; 
 // ^^^ ESTE CAMINHO ESTÁ CORRETO? ^^^
 import { fetchProdutos } from '../services/api_produtos';
 // NOTA: Para um projeto completo, você faria uma chamada API separada para buscar estas categorias.
