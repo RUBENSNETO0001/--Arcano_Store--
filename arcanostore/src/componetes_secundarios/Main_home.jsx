@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import '../css/Main/Main.css';
-
-// 1. IMPORTAÇÃO CORRETA: Importa a função assíncrona e as categorias estáticas
 import getProdutosData, { categoriesData } from './Produtos'; 
+import '../css/Main/Main.css';
 // --------------------------------------------------------------------------------------
 // COMPONENTE PRINCIPAL
 // --------------------------------------------------------------------------------------

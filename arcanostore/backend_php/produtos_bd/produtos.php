@@ -4,7 +4,9 @@
     // ***************************************************************
     // CORREÇÃO CORS: ESSENCIAL
     // ***************************************************************
-    
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
     // Permite acesso APENAS da origem do servidor React (porta 3000)
     header("Access-Control-Allow-Origin: http://localhost:3000"); 
 
@@ -22,7 +24,7 @@
     // 1. INCLUSÃO DE ARQUIVOS NECESSÁRIOS
     // ------------------------------------------------------------------
     // O caminho deve ser relativo ao produtos.php
-    include '../../conexao_banco_de_dados/conexao.php'; 
+    include '../conexao_banco_de_dados/conexao.php'; // Ajuste o caminho conforme necessário
     
     // ------------------------------------------------------------------   
     // 2. TESTE DE CONEXÃO (Se falhar, retorna erro 500 para o React)
