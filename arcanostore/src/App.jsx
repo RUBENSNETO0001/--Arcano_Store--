@@ -5,7 +5,7 @@ import Home from './componetes_secundarios/Main_home';
 import Sobre from './componentes_principais/links/sobrenos';
 import ProductDetailPage from './componetes_secundarios/Main_comprar'; 
 import { fazerLogin } from './services/apiService'; 
-
+import Carrinho from './componetes_secundarios/carrinho_home';
 function App() {
     const [activeView, setActiveView] = useState('home'); 
     const [selectedProductId, setSelectedProductId] = useState(null); 
@@ -80,6 +80,7 @@ function App() {
             />
             {renderContent()}
             <Footer/>
+            <Carrinho />
         </div>
     );
 }

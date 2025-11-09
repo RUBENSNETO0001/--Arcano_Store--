@@ -1,21 +1,8 @@
 import '../css/Registro/login.css';
 import React, { useState } from 'react';
 
-// ==================================================================
-// 0. FUNÇÕES DE SERVIÇO (CORREÇÃO: Importação correta)
-// ==================================================================
-
-// CERTIFIQUE-SE QUE VOCÊ IMPORTA AMBAS as funções de apiService.js
 import { fazerLogin, registrarUsuario } from '../services/apiService'; 
 
-// *** REMOVIDO: A função PLACEHOLDER de registrarUsuario foi removida ***
-// *** A função 'registrarUsuario' agora é a que foi importada acima. ***
-
-
-// ==================================================================
-// 1. COMPONENTE DE LOGIN 
-// ==================================================================
-// Recebe onLoginSuccess como uma prop
 function LoginForm({ onLoginSuccess }) { 
     const [formData, setFormData] = useState({
         email: '',
@@ -90,10 +77,6 @@ function LoginForm({ onLoginSuccess }) {
         </form>
     );
 }
-
-// ==================================================================
-// 2. COMPONENTE DE REGISTRO 
-// ==================================================================
 const RegistrationForm = () => {
     const [formData, setFormData] = useState({
         full_name: '', 
@@ -175,15 +158,7 @@ const RegistrationForm = () => {
         </form>
     );
 };
-
-
-// ==================================================================
-// 3. COMPONENTE PRINCIPAL (ÚNICO DEFAULT EXPORT)
-// ==================================================================
-/**
- * Componente principal que gerencia o estado de visualização (Login/Registro)
- * e a lógica pós-sucesso do login (armazenamento e redirecionamento).
- */
+ 
 const AuthPage = () => {
     // isLogin: controla qual formulário está visível
     const [isLogin, setIsLogin] = useState(true);

@@ -3,14 +3,9 @@ import getProdutosData, { categoriesData } from './Produtos';
 import '../css/Main/Main.css';
 
 const Main = ({ onViewProduct }) => {
-  // 2. ESTADOS: Para armazenar produtos e o status de carregamento
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  
-  // As categorias ainda podem ser usadas diretamente, pois são estáticas
   const categories = categoriesData; 
-
-  // 3. EFEITO: Chamada Assíncrona para buscar os dados
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
@@ -42,7 +37,6 @@ const Main = ({ onViewProduct }) => {
     loadData();
   }, []); 
 
-  // 4. Lógica: Encontrando o produto mais vendido para a Hero Section
   // (Usa o primeiro produto se nenhum for marcado como 'bestseller' no mapeamento)
   const bestSellerProduct = featuredProducts.find(p => p.bestseller) || featuredProducts[0];
 
@@ -55,12 +49,10 @@ const Main = ({ onViewProduct }) => {
     }
   };
 
-  // 5. Renderização de Carregamento
   if (loading) {
     return <div className="loading-state-main">Carregando o Universo Arcano... ✨</div>;
   }
-  
-  // 6. Renderização de Conteúdo (Usa 'bestSellerProduct' e 'featuredProducts')
+
   return (
     <main className="main-content">
       {/* Hero Section */}
@@ -231,11 +223,6 @@ const Main = ({ onViewProduct }) => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Benefícios (Restante do seu JSX sem alteração) */}
-      <section className="benefits-section">
-       
       </section>
     </main>
   );
