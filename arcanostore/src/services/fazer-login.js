@@ -24,9 +24,6 @@ document.addEventListener('DOMContentLoaded', async () => { // Torna o listener 
     if (loginForm) {
         loginForm.addEventListener('submit', handleFormSubmission); 
     }
-    
-    // Agora o 'await' funciona porque o bloco externo é async
-    // eu quero morrer me emata eu nao aguento minh vida eu vou me matar aaaaaaaaaaaaaaaa
     const { verificarEstadoInicial } = await import('./button-login-carrinho.js');
     verificarEstadoInicial();
 });

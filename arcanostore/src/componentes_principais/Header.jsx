@@ -1,15 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import '../css/Navbar.css';
-import AuthPage from '../componetes_secundarios/Login_registro'; // Importa o modal de autenticação
+import AuthPage from '../componetes_secundarios/Login_registro'; 
 import Contato from './links/contato';
+// IMPORT CORRIGIDA: Use 'system-carrinho' se for o nome do arquivo, ou 'sistema-carrinho' se você o renomeou.
+import { obterCarrinho } from '../services/system-carrinho'; 
 
 const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout }) => {
     
     const [isAuthOpen, setIsAuthOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [itemCount, setItemCount] = useState(0); 
 
-    // EFEITO: Controla o scroll do body para o modal
+    const updateItemCount = () => {
+        const carrinho = obterCarrinho();
+        const total = carrinho.reduce((sum, item) => sum + (item.quantidade || 0), 0);
+        setItemCount(total);
+    };
+
+    useEffect(() => {
+        updateItemCount(); 
+        window.addEventListener('storage', updateItemCount);
+        return () => {
+            window.removeEventListener('storage', updateItemCount);
+        };
+    }, []); 
+
     useEffect(() => {
         if (isAuthOpen) {
             document.body.classList.add('modal-open');
@@ -21,7 +37,6 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
         };
     }, [isAuthOpen]);
 
-    // EFEITO: Controla a rolagem da Navbar
     useEffect(() => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
@@ -30,9 +45,8 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // FUNÇÕES DE MANUSEIO
     const handleLinkClick = (view) => {
-        setIsMobileMenuOpen(false); // Fecha o menu mobile ao clicar em um link
+        setIsMobileMenuOpen(false); 
         if (onNavigate) {
             onNavigate(view);
         }
@@ -40,32 +54,47 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
 
     const handleLoginClick = () => {
         setIsAuthOpen(true);
-        setIsMobileMenuOpen(false); // Fecha o menu mobile se estiver aberto
+        setIsMobileMenuOpen(false); 
     };
     
-    // Função chamada pelo AuthPage quando o login é bem-sucedido
     const handleLoginSuccess = () => {
-        setIsAuthOpen(false); // 1. Fecha o modal
+        setIsAuthOpen(false); 
         if (onLogin) {
-            // 2. Chama a função passada pelo App.js para atualizar o estado global
             onLogin(); 
         }
     };
 
-    // --- Lógica de Renderização Condicional dos Botões ---
     const renderCTAs = (isMobile = false) => {
         const ctaClass = isMobile ? 'mobile-cta-button' : 'cta-button';
         const containerClass = isMobile ? 'mobile-cta' : 'navbar-cta';
 
+        const badgeStyle = {
+            position: 'absolute',
+            top: '-5px',
+            right: '-10px',
+            background: 'red',
+            color: 'white',
+            borderRadius: '50%',
+            padding: '2px 6px',
+            fontSize: '0.75rem',
+            fontWeight: 'bold',
+            lineHeight: '1',
+            pointerEvents: 'none', 
+        };
+        
         if (isLoggedIn) {
-            // Se logado, mostra o botão do carrinho (navbar-cta2)
             return (
                 <div className={containerClass}>
-                    <button id="navbar-cta2" className={ctaClass}>
+                    <button 
+                        id="navbar-cta2" 
+                        className={ctaClass}
+                        onClick={() => handleLinkClick('carrinho')} 
+                        style={{ position: 'relative' }} 
+                    >
                         <i className="fas fa-shopping-cart"></i> Carrinho
+                        {itemCount > 0 && <span style={badgeStyle}>{itemCount}</span>}
                     </button>
                     {isMobile && onLogout && (
-                        // Adiciona botão Sair no mobile
                         <button className={ctaClass} onClick={onLogout} style={{ marginTop: '10px' }}>
                             <i className="fas fa-sign-out-alt"></i> Sair
                         </button>
@@ -73,7 +102,6 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
                 </div>
             );
         } else {
-            // Se não logado, mostra o botão de login
             return (
                 <div className={containerClass}>
                     <button id="navbar-cta" className={ctaClass} onClick={handleLoginClick}> 
@@ -84,10 +112,8 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
         }
     };
 
-
     return (
         <>
-            {/* Navbar Principal */}
             <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="navbar-container">
                     <div className="navbar-logo">
@@ -97,7 +123,6 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
                         </button>
                     </div>
 
-                    {/* Menu Desktop */}
                     {!apenasLogin && (
                         <ul className="navbar-menu">
                             <li className="navbar-item"><button className="navbar-link" onClick={() => handleLinkClick('home')}>Início</button></li>
@@ -106,10 +131,8 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
                         </ul>
                     )}
 
-                    {/* Botões de Ação Desktop */}
                     {renderCTAs()}
 
-                    {/* Menu mobile toggle */}
                     {!apenasLogin && (
                         <div className={`navbar-toggle ${isMobileMenuOpen ? 'active' : ''}`} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
                             <span className="bar"></span>
@@ -119,17 +142,10 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
                     )}
                 </div>
             </nav>
-
-            {/* ----------------------------------------------------------- */}
-            {/* CORREÇÃO CRUCIAL: ESTRUTURA E LÓGICA DO MENU MOBILE (JSX) */}
-            {/* ----------------------------------------------------------- */}
-
-            {/* 1. O OVERLAY (fundo escuro opcional) */}
             {isMobileMenuOpen && (
                 <div className="mobile-overlay active" onClick={() => setIsMobileMenuOpen(false)}></div>
             )}
             
-            {/* 2. O MENU LATERAL */}
             <div className={`mobile-menu ${isMobileMenuOpen ? 'active' : ''}`}>
                 <div className="mobile-menu-header">
                     <span className="mobile-menu-title">Menu</span>
@@ -152,13 +168,10 @@ const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout
                         </button>
                     </li>
                     <li className="mobile-item">
-                        {/* Como Contato é um componente, ele é renderizado diretamente */}
                         <Contato /> 
                     </li>
                 </ul>
                 
-                {/* Botões de Ação Mobile (Login/Carrinho) */}
-                {/* Se você quiser o CTA no footer do menu, remova a div anterior e use esta: */}
                 {renderCTAs(true)}
                 
             </div>

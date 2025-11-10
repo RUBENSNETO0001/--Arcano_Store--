@@ -1,5 +1,4 @@
 const API_BASE_URL = `http://localhost/--Arcano_Store--/arcanostore/backend_php/produtos_bd/produtos.php`;
-// NOVO: URL específica para o endpoint de detalhe (detalhe_produto.php)
 const API_PRODUTOS_ID = `http://localhost/--Arcano_Store--/arcanostore/backend_php/produtos_bd/detalhe_produto.php`;
 
 export const fetchProdutos = async () => {
@@ -17,7 +16,6 @@ export const fetchProdutos = async () => {
         
         const data = await response.json();
         
-        // Retorna o array aninhado na chave 'featuredProducts'
         return data.featuredProducts || data; 
 
     } catch (error) {
@@ -48,7 +46,6 @@ export const fetchProdutoPorId = async (produtoId) => {
         
         const data = await response.json();
         
-        // *** CORREÇÃO AQUI: Espera a chave 'produtoDetalhe' do detalhe_produto.php ***
         const produto = data.produtoDetalhe; 
         
         if (!produto) {

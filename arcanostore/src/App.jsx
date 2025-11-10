@@ -5,11 +5,12 @@ import Home from './componetes_secundarios/Main_home';
 import Sobre from './componentes_principais/links/sobrenos';
 import ProductDetailPage from './componetes_secundarios/Main_comprar'; 
 import { fazerLogin } from './services/apiService'; 
-import Carrinho from './componetes_secundarios/carrinho_home';
+import Carrinho from './componetes_secundarios/carrinho_home'; // O componente PaginaDoCarrinho
+
 function App() {
     const [activeView, setActiveView] = useState('home'); 
     const [selectedProductId, setSelectedProductId] = useState(null); 
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Estado para o login
+    const [isLoggedIn, setIsLoggedIn] = useState(false); 
 
     // Efeito para verificar o estado de login ao carregar (lendo o localStorage)
     useEffect(() => {
@@ -23,6 +24,7 @@ function App() {
     const handleNavigation = (view) => {
         setActiveView(view);
         setSelectedProductId(null);
+        window.scrollTo(0, 0); // Rola para o topo ao mudar de view
     };
 
     const handleViewProduct = (productId) => {
@@ -37,6 +39,7 @@ function App() {
         window.scrollTo(0, 0);
     };
 
+    // FUNÇÃO DE LOGIN
     const handleLoginProcess = async (loginData) => {
         const resultado = await fazerLogin(loginData);
 
@@ -46,13 +49,22 @@ function App() {
             
             alert("Login realizado com sucesso!");
             
-            // Redirecionamento (Pode ser removido se o login for um modal na mesma página)
+            // Redirecionamento (Mantenho a sua lógica original)
             window.location.href = '/index.html'; 
         } else {
             alert(resultado.mensagem);
         }
     };
     
+    // FUNÇÃO DE LOGOUT (NOVA LÓGICA)
+    const handleLogout = () => {
+        localStorage.removeItem('usuarioLogado');
+        setIsLoggedIn(false);
+        alert("Você saiu da sua conta.");
+        handleNavigation('home'); // Volta para a página inicial após o logout
+    };
+    
+    // RENDERIZAÇÃO CONDICIONAL DO CONTEÚDO (INCLUINDO 'carrinho')
     const renderContent = () => {
         switch (activeView) {
             case 'home':
@@ -66,6 +78,9 @@ function App() {
                         onBack={handleBackToHome}
                     />
                 );
+            case 'carrinho':
+                // 🛒 O componente que criamos (PaginaDoCarrinho)
+                return <Carrinho />;
             default:
                 return <Home onViewProduct={handleViewProduct} />;
         }
@@ -75,12 +90,12 @@ function App() {
         <div className="body">
             <Header 
                 onNavigate={handleNavigation} 
-                isLoggedIn={isLoggedIn} // Passa o estado para o Header
-                onLogin={handleLoginProcess}
+                isLoggedIn={isLoggedIn} 
+                onLogin={handleLoginProcess} // Chamado ao clicar em Login no modal
+                onLogout={handleLogout}       // 🚀 NOVO: Passa a função de Logout
             />
             {renderContent()}
             <Footer/>
-            <Carrinho />
         </div>
     );
 }

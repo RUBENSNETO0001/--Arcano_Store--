@@ -204,8 +204,8 @@ const Main = ({ onViewProduct }) => {
               <div className="benefit-icon">
                 <i className="fas fa-shipping-fast"></i>
               </div>
-              <h3>Entrega Rápida</h3>
-              <p>Receba seus itens mágicos em até 24h</p>
+              <h3>Retiro de item</h3>
+              <p>Retire seus itens mágicos</p>
             </div>
             <div className="benefit-card">
               <div className="benefit-icon">

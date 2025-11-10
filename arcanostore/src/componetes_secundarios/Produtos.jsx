@@ -1,6 +1,9 @@
-const PHP_API_URL_BASE = 'http/localhost/--Arcano_Store--/arcanostore/backend_php/produtos_bd/produtos.php'; 
-// ^^^ ESTE CAMINHO ESTÁ CORRETO? ^^^
-import { fetchProdutos } from '../services/api_produtos';
+import { fetchProdutos } from '../services/api_produtos'; 
+
+// Esta URL agora está EXPORTADA e com o protocolo CORRIGIDO (http://).
+// Se for usada apenas dentro de 'api_produtos.js', você deve movê-la para lá.
+export const PHP_API_URL_BASE = 'http://localhost/--Arcano_Store--/arcanostore/backend_php/produtos_bd/produtos.php'; 
+
 // NOTA: Para um projeto completo, você faria uma chamada API separada para buscar estas categorias.
 const categoriesData = [
   { name: "Caneca", icon: "🍻", count: 6 },
@@ -15,36 +18,27 @@ const categoriesData = [
  */
 export const getProdutosData = async () => {
     
-    // Chama a função da API e aguarda os produtos
+    // Chama a função que fará a requisição HTTP.
     const featuredProducts = await fetchProdutos();
 
-    // Verifica se a API retornou um array de produtos ou um objeto de erro
     if (Array.isArray(featuredProducts)) {
-        // Se for um array, os dados estão prontos para serem usados
-        
-        // Opcional: Aqui você pode fazer qualquer transformação final nos dados se necessário.
-        // Por exemplo, formatar preço, etc. (O PHP já faz boa parte disso).
-
+        // Se a resposta for um array de produtos, retorna o sucesso.
         return {
             featuredProducts: featuredProducts,
             categories: categoriesData,
         };
     } else {
-        // Se a API retornou um erro (o objeto { sucesso: false, mensagem: ... })
+        // Se a API retornou um erro (ex: { sucesso: false, mensagem: ... }) ou um valor inesperado.
         console.error("Não foi possível carregar os produtos em destaque. Usando dados vazios.");
         return {
-            featuredProducts: [], // Retorna um array vazio em caso de erro
+            featuredProducts: [],
             categories: categoriesData,
         };
     }
 };
 
-// Exporta o novo nome da função para ser chamada no componente/página
+// Exporta a função principal para ser chamada no componente/página
 export default getProdutosData;
 
 // Exporta os dados estáticos caso ainda sejam usados em outro lugar
 export { categoriesData };
-
-// O array featuredProductsData fica vazio ou é removido, 
-// pois agora os dados vêm da API.
-// const featuredProductsData = [];

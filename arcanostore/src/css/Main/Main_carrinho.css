@@ -1,70 +1,98 @@
-/* --- Estilos do Componente Carrinho (carrinho-painel) --- */
+/* PaginaDoCarrinho.css */
 
-.carrinho-painel {
-    width: 100%;
+/* Define o layout da página */
+.pagina-principal-do-carrinho {
+    max-width: 1200px;
+    margin: 7% auto;
     padding: 20px;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
+    background-color: #f7f7f7;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    min-height: 400px; /* Garante um tamanho mínimo */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.carrinho-painel h2 {
-    border-bottom: 2px solid #007bff; /* Linha azul para destaque */
+.pagina-principal-do-carrinho h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #ddd;
     padding-bottom: 10px;
-    margin-bottom: 20px;
-    color: #007bff;
 }
 
+/* Garante que o painel do carrinho use a largura total */
+.carrinho-painel {
+    padding: 25px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+}
+
+/* Mensagem de carrinho vazio */
 .carrinho-vazio-msg {
     text-align: center;
-    color: #6c757d;
-    padding: 40px 0;
-    font-style: italic;
+    padding: 50px 20px;
+    font-size: 1.2em;
+    color: #888;
+    background-color: #fff8e1; /* Cor suave de atenção */
+    border: 1px dashed #ffcc80;
+    border-radius: 4px;
+}
+/* Estiliza a lista de itens no carrinho */
+/* Main_carrinho.css */
+
+/* --- Geral --- */
+.carrinho-painel h2 {
+    color: #007bff; /* Azul primário */
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+.lista-itens-carrinho {
+    border-top: 1px solid #eee;
 }
 
 /* --- Item Individual --- */
 .item-carrinho-detalhe {
-    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
 .info-produto-carrinho h4 {
     margin: 0 0 5px 0;
     color: #333;
+}
+
+.subtotal-carrinho {
     font-size: 1.1em;
+    font-weight: bold;
+    color: #28a745; /* Cor para destaque de valor */
 }
 
-.info-produto-carrinho p {
-    margin: 0;
-    font-size: 0.9em;
-    color: #6c757d;
-}
-
-/* --- Controles (Quantidade e Subtotal) --- */
+/* --- Controles de Quantidade e Remoção --- */
 .controles-carrinho {
     display: flex;
     align-items: center;
-    justify-content: flex-start; /* Alinha à esquerda */
-    margin-top: 10px;
-    gap: 20px; 
+    gap: 15px;
 }
 
 .quantidade-selector-carrinho {
     display: flex;
     align-items: center;
-    gap: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 .quantidade-selector-carrinho button {
     background-color: #f8f9fa;
-    border: 1px solid #ced4da;
-    width: 30px;
-    height: 30px;
-    border-radius: 4px;
+    border: none;
+    padding: 8px 12px;
     cursor: pointer;
     font-weight: bold;
-    transition: background-color 0.1s;
+    transition: background-color 0.2s;
 }
 
 .quantidade-selector-carrinho button:hover:not(:disabled) {
@@ -73,144 +101,128 @@
 
 .quantidade-selector-carrinho button:disabled {
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .quantidade-valor {
-    padding: 0 5px;
-    font-weight: 600;
-}
-
-.subtotal-carrinho {
+    padding: 0 15px;
     font-weight: bold;
-    color: #007bff;
-    font-size: 1.1em;
-    margin-left: auto; /* Empurra para o centro/direita */
+    color: #495057;
 }
 
 .btn-remover-carrinho {
-    background: none;
+    background-color: #dc3545; /* Vermelho para remover */
+    color: white;
     border: none;
-    color: #dc3545; /* Vermelho para remover */
+    padding: 8px 15px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 0.9em;
-    font-weight: 500;
+    transition: background-color 0.2s;
 }
 
 .btn-remover-carrinho:hover {
-    text-decoration: underline;
+    background-color: #c82333;
 }
 
-/* --- Resumo e Finalização --- */
+/* --- Resumo e Botão Finalizar --- */
 .resumo-total-carrinho {
-    padding-top: 20px;
-    text-align: right;
-    border-top: 3px double #007bff;
     margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px dashed #ccc;
+    text-align: right;
 }
 
 .resumo-total-carrinho h3 {
+    font-size: 1.5em;
     color: #333;
-    font-size: 1.4em;
     margin-bottom: 15px;
 }
 
 .btn-finalizar-carrinho {
-    background-color: #28a745; /* Verde para sucesso */
+    background-color: #1a73e8; /* Azul forte, bom para PIX */
     color: white;
-    padding: 12px 30px;
     border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
     border-radius: 6px;
     cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 700;
     transition: background-color 0.2s;
+    width: 100%; /* Botão grande para checkout */
 }
 
-.btn-finalizar-carrinho:hover {
-    background-color: #1e7e34;
+.btn-finalizar-carrinho:hover:not(:disabled) {
+    background-color: #0c5bc9;
 }
-/* --- Estilos Adicionais para PIX --- */
 
+.btn-finalizar-carrinho:disabled {
+    background-color: #adb5bd;
+    cursor: not-allowed;
+}
+
+/* --- Seção PIX --- */
 .pix-info-box {
-    padding: 15px;
+    margin-top: 20px;
+    padding: 20px;
     border-radius: 8px;
     text-align: center;
-    margin-top: 20px;
 }
 
+/* Estado: Gerado (Aguardando) */
 .pix-info-gerado {
-    background-color: #fffbe6; /* Amarelo claro para "Aguardando" */
-    border: 2px solid #ffc107;
+    background-color: #fff3cd; /* Amarelo suave */
+    border: 1px solid #ffc107;
 }
 
-.pix-info-pago {
-    background-color: #e6ffed; /* Verde claro para "Pago" */
-    border: 2px solid #28a745;
-}
-
-.pix-info-box h4, .pix-info-box h3 {
-    color: #333;
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.pix-qr-code-placeholder {
-    margin: 15px auto;
+.pix-qr-code-placeholder img {
     width: 150px;
     height: 150px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    background-color: white;
 }
 
 .pix-code-copia {
     font-size: 0.9em;
-    font-weight: 500;
-    word-break: break-all;
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 4px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
 }
 
 .pix-code {
-    background-color: #eee;
-    padding: 3px 8px;
-    border-radius: 4px;
     font-family: monospace;
-    font-size: 0.9em;
+    font-weight: bold;
+    color: #495057;
+    flex-grow: 1; /* Permite que o código ocupe o espaço */
+    text-align: left;
+    margin-right: 10px;
 }
 
 .btn-copiar-pix {
-    background-color: #007bff;
+    background-color: #28a745;
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.8em;
 }
 
-.btn-copiar-pix:hover {
-    background-color: #0056b3;
+/* Estado: Pago (Confirmado) */
+.pix-info-pago {
+    background-color: #d4edda; /* Verde suave */
+    border: 1px solid #28a745;
+    color: #155724;
 }
 
 .btn-primary-nova-compra {
-    background-color: #6c757d;
+    background-color: #007bff;
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 6px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-top: 15px;
     cursor: pointer;
-    margin-top: 10px;
-}
-
-/* Modificação do botão principal para status PIX */
-.resumo-total-carrinho .btn-finalizar-carrinho {
-    width: 100%; /* Ocupa a largura total da seção */
-    background-color: #20c997; /* Verde/Ciano para PIX */
-    font-size: 1.2em;
 }
