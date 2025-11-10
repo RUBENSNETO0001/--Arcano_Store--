@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { fetchProdutoPorId } from '../services/api_produtos'; 
+import { fetchProdutoPorId } from '../services/api_produtos';
 import '../css/Main/Main_CompraProduto.css';
 import { adicionarAoCarrinho } from '../services/system-carrinho';
 
-const ProductDetailPage = ({ productId = 1 }) => { 
+const ProductDetailPage = ({ productId = 1 }) => {
   // O componente pode receber o 'productId' via props ou via URL (se você usar React Router)
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,41 +12,42 @@ const ProductDetailPage = ({ productId = 1 }) => {
 
   useEffect(() => {
     const loadProduct = async () => {
-        if (!productId) {
-            setLoading(false);
-            return;
-        }
+      if (!productId) {
+        setLoading(false);
+        return;
+      }
 
-        setLoading(true);
-        try {
-            const data = await fetchProdutoPorId(productId); 
-            
-            if (data && data.id) { 
-                const productFromAPI = {
-                    id: data.id,
-                    name: data.nome,
-                    price: `R$ ${parseFloat(data.preco).toFixed(2).replace('.', ',')}`, 
-                    category: data.category,
-                    discount: parseFloat(data.desconto) > 0 ? `${parseFloat(data.desconto).toFixed(0)}% OFF` : null,
-                    image: data.image, 
-                    description: data.description,};
+      setLoading(true);
+      try {
+        const data = await fetchProdutoPorId(productId);
 
-                setProduct(productFromAPI);
-                setMainImage(productFromAPI.image);
-            } else {
-                setProduct(null);
-            }
-        } catch (error) {
-            console.error("Falha catastrófica ao carregar produto:", error);
-            setProduct(null);
-        } finally {
-            setLoading(false);
+        if (data && data.id) {
+          const productFromAPI = {
+            id: data.id,
+            name: data.nome,
+            price: `R$ ${parseFloat(data.preco).toFixed(2).replace('.', ',')}`,
+            category: data.category,
+            discount: parseFloat(data.desconto) > 0 ? `${parseFloat(data.desconto).toFixed(0)}% OFF` : null,
+            image: data.image,
+            description: data.description,
+          };
+
+          setProduct(productFromAPI);
+          setMainImage(productFromAPI.image);
+        } else {
+          setProduct(null);
         }
+      } catch (error) {
+        console.error("Falha catastrófica ao carregar produto:", error);
+        setProduct(null);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadProduct();
-    
-  }, [productId]); 
+
+  }, [productId]);
 
   const handleQuantityChange = (e) => {
     const value = Math.max(1, parseInt(e.target.value) || 1);
@@ -58,10 +59,10 @@ const ProductDetailPage = ({ productId = 1 }) => {
       adicionarAoCarrinho({
         id: product.id,
         name: product.name,
-        price: product.price, 
-        quantidade: quantity 
-      }); 
-      
+        price: product.price,
+        quantidade: quantity
+      });
+
       alert(`Adicionado ${quantity}x ${product.name} ao carrinho!`);
     }
   };
@@ -137,9 +138,6 @@ const ProductDetailPage = ({ productId = 1 }) => {
               onClick={handleAddToCart}
             >
               <i className="fas fa-cart-plus"></i> Adicionar ao Carrinho
-            </button>
-            <button className="btn-secondary wishlist-btn">
-              <i className="far fa-heart"></i> Adicionar à Lista de Desejos
             </button>
           </div>
 
