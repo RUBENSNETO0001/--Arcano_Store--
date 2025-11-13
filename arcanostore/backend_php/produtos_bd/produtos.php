@@ -2,27 +2,24 @@
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-    // Permite acesso APENAS da origem do servidor React (porta 3000)
     header("Access-Control-Allow-Origin: http://localhost:3000"); 
 
-    // Métodos e Headers permitidos
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type"); 
 
-    // Trata a requisição OPTIONS (pré-voo do CORS)
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
         http_response_code(200);
         exit();
     }
-    // O caminho deve ser relativo ao produtos.php
-    include '../conexao_banco_de_dados/conexao.php'; // Ajuste o caminho conforme necessário
+
+    include '../conexao_banco_de_dados/conexao.php'; 
     
     if (!$conexao) {
         http_response_code(500); 
         echo json_encode(["sucesso" => false, "mensagem" => "Erro de Conexão com o Banco de Dados. Verifique o conexao.php."]);
         exit();
     }
-    // query para buscar dados de produto, categoria e itens
+
     $produtos_query = "
         SELECT
             p.id_produto AS id,
@@ -43,7 +40,6 @@
     
     $resultado = $conexao->query($produtos_query);
 
-    // TESTE DE QUERY
     if (!$resultado) {
         http_response_code(500);
         echo json_encode(["sucesso" => false, "mensagem" => "Erro na Query SQL: " . $conexao->error]);
@@ -56,8 +52,6 @@
             $produtos[] = $row;
         }
     }
-    
-    // Retorna o resultado como JSON
     header('Content-Type: application/json');
     echo json_encode(["featuredProducts" => $produtos]);
 ?>
