@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Tempo de geração: 10/11/2025 às 21:36
+-- Tempo de geração: 22/11/2025 às 21:29
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.0.30
 
@@ -84,8 +84,8 @@ CREATE TABLE `produto_itens` (
 
 INSERT INTO `produto_itens` (`id_prod_item`, `id_produto`, `imagem_url`, `descricao_detalhada`) VALUES
 (1, 1, 'https://img.assinaja.com/assets/tZ/099/img/512813_520x520.png', 'O jovem Rudo habita em um gueto de descendentes de criminosos e vive recolhendo lixo e sendo discriminado, até que certo dia, ele é acusado injustamente de um crime que não cometeu e como punição é enviado a um local em que todos temem! Lá, o rapaz conhece conhece Enjin e acaba tendo um vislumbre de toda a verdade sobre o mundo e também começa a manifestar a sua habilidade: Dar vida às coisas! Assim, começa a jornada de Rudo e seu objetivo de mudar por completo o mundo de merda em que vive!!'),
-(2, 2, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQrjob0f7BpjcXVOAylOww7zjT_-boZ0YYFTQ88rj9xLyDxwsCbi8MHePkgATWRTUD_suN88eAAV6PNH2W1-jq_vgWAbpRXKXTtgO5vH6kqkRrCH-jg2H8FXA', 'N/A'),
-(3, 3, 'https://m.media-amazon.com/images/I/410jh8W1t8S._SY1000_.jpg', 'N/A');
+(2, 2, 'https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQrjob0f7BpjcXVOAylOww7zjT_-boZ0YYFTQ88rj9xLyDxwsCbi8MHePkgATWRTUD_suN88eAAV6PNH2W1-jq_vgWAbpRXKXTtgO5vH6kqkRrCH-jg2H8FXA', 'Um caneco com design minimalista, traços limpos e arte moderna inspirada no universo anime. Perfeito para quem curte estilo, personalidade e aquela vibe única que mistura elegância com cultura otaku. Feito para quem bebe com classe.'),
+(3, 3, 'https://m.media-amazon.com/images/I/410jh8W1t8S._SY1000_.jpg', 'Um bracelete inspirado na grandiosa jornada de One Piece, combinando detalhes náuticos e símbolos icônicos dos Piratas do Chapéu de Palha. Feito para quem carrega a coragem, a aventura e a liberdade no pulso.');
 
 -- --------------------------------------------------------
 
@@ -110,7 +110,8 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`id`, `nome_completo`, `data_nascimento`, `cpf`, `email`, `telefone`, `senha`) VALUES
 (3, 'admin da silva', '0001-01-01', '00000000000', 'admin@gmail.com', '000000000000', '$2y$10$TyWwa2u46L2CAWayYXxM6eSRKCKMar/4QXfYAjyca0mqrP.lAKKXK'),
 (4, 'RUBENS NETO MARTINS SUAREZ', '2006-01-23', '00000000000', 'rubensnetomartinssuarezneto@outlook.com', '68992402349', '$2y$10$lXSA7YVL5Y.AnygJBPTDW.hp5W1f2zkR84TA8Gu3SdcPY8jAksp.y'),
-(5, 'Jose', '2025-10-01', '070.335.962', 'josegaymes@hotmail.com', '68992402349', '$2y$10$VrDG0Pf.603EifJyrhXRjOC/ILcC9zuYtMzaAATS7rluzgN9ZlkLe');
+(5, 'Jose', '2025-10-01', '070.335.962', 'josegaymes@hotmail.com', '68992402349', '$2y$10$VrDG0Pf.603EifJyrhXRjOC/ILcC9zuYtMzaAATS7rluzgN9ZlkLe'),
+(6, 'flavio do pneu', '2204-01-01', '12121212121', 'flaviodopeneu@gmail.com', '121212121212', '$2y$10$.LJpXWAy.IH6HhHH8gokuO1p3OuLun/qfxITfkkNYIhIpWUzizgdC');
 
 --
 -- Índices para tabelas despejadas
@@ -168,7 +169,7 @@ ALTER TABLE `produto_itens`
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restrições para tabelas despejadas

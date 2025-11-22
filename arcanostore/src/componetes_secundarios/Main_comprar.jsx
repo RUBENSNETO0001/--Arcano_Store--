@@ -7,7 +7,6 @@ const ProductDetailPage = ({ productId = 1 }) => {
   // O componente pode receber o 'productId' via props ou via URL (se você usar React Router)
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [quantity, setQuantity] = useState(1);
   const [mainImage, setMainImage] = useState('');
 
   useEffect(() => {
@@ -49,10 +48,7 @@ const ProductDetailPage = ({ productId = 1 }) => {
 
   }, [productId]);
 
-  const handleQuantityChange = (e) => {
-    const value = Math.max(1, parseInt(e.target.value) || 1);
-    setQuantity(value);
-  };
+
 
   const handleAddToCart = () => {
     if (product) {
@@ -60,10 +56,9 @@ const ProductDetailPage = ({ productId = 1 }) => {
         id: product.id,
         name: product.name,
         price: product.price,
-        quantidade: quantity
       });
 
-      alert(`Adicionado ${quantity}x ${product.name} ao carrinho!`);
+      alert(`Adicionando o produto ${product.name} ao carrinho!`);
     }
   };
 
@@ -123,16 +118,6 @@ const ProductDetailPage = ({ productId = 1 }) => {
 
           {/* Ações de Compra */}
           <div className="product-purchase-actions">
-            <div className="quantity-selector">
-              <label htmlFor="quantity">Quantidade:</label>
-              <input
-                id="quantity"
-                type="number"
-                min="1"
-                value={quantity}
-                onChange={handleQuantityChange}
-              />
-            </div>
             <button
               className="btn-primary add-to-cart-btn"
               onClick={handleAddToCart}
@@ -142,7 +127,7 @@ const ProductDetailPage = ({ productId = 1 }) => {
           </div>
 
           <div className="shipping-info">
-            <i className="fas fa-shipping-fast"></i> Entrega Rápida em todo o Reino!
+            <i className="fas fa-shipping-fast"></i> Colete seu item na loja!
           </div>
 
         </div>

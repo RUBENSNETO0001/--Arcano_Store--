@@ -102,11 +102,12 @@ function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade
         );
 
       case 'pago':
+        let codprocess = Math.floor(Math.random() * 900000) + 100000;
         return (
           <div className="pix-info-box pix-info-pago">
             <h3>✅ Pagamento Confirmado!</h3>
             <p>Seu pedido será processado em breve. Obrigado!</p>
-            <button className="btn-primary-nova-compra">Nova Compra</button>
+            codigo para o retiro do produto: <span className="cod-item">{codprocess}</span>
           </div>
         );
       default:

@@ -3,9 +3,9 @@ import { fetchProdutos } from '../services/api_produtos';
 export const PHP_API_URL_BASE = 'http://localhost/--Arcano_Store--/arcanostore/backend_php/produtos_bd/produtos.php'; 
 
 const categoriesData = [
-  { name: "Caneca", icon: "🍻", count: 3 },
-  { name: "Manga", icon: "📚", count: 3 },
-  { name: "cartinhas", icon: "🃏", count: 2 },
+  { name: "Caneca", icon: "🍻", count: 1 },
+  { name: "Manga", icon: "📚", count: 1 },
+  { name: "cartinhas", icon: "🃏", count: 0 },
   { name: "Acessorios", icon: "💎", count: 1},
 ];
 

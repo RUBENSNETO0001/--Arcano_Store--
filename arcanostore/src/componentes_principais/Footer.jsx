@@ -38,8 +38,8 @@ const Footer = () => {
             <h3 className="footer-title">Links Rápidos</h3>
             <ul className="footer-links">
               <li><a href="/">Início</a></li>
-              <li><a href="/sobre">Sobre Nós</a></li>
-              <li><a href="/produtos">Produtos</a></li>
+              <li><a href="/">Sobre Nós</a></li>
+              <li><a href="/">Produtos</a></li>
               <li><Contato/></li>
             </ul>
           </div>
@@ -47,10 +47,10 @@ const Footer = () => {
           <div className="footer-section">
             <h3 className="footer-title">Categorias</h3>
             <ul className="footer-links">
-              <li><a href="/categoria/livros">Canecas</a></li>
-              <li><a href="/categoria/artefatos">Manga</a></li>
-              <li><a href="/categoria/poções">Cartinha</a></li>
-              <li><a href="/categoria/vestimentas">Acessorio</a></li>
+              <li><a href="/">Canecas</a></li>
+              <li><a href="/">Manga</a></li>
+              <li><a href="/">Cartinha</a></li>
+              <li><a href="/">Acessorio</a></li>
             </ul>
           </div>
 
@@ -59,15 +59,15 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <i className="fas fa-map-marker-alt"></i>
-                <span>Rua das XXXX, 123 - Centro</span>
+                <span>Bairro Xavier Maia, 123</span>
               </div>
               <div className="contact-item">
                 <i className="fas fa-phone"></i>
-                <span>+55 (68) 9214-3842</span>
+                <span>+5568992118928</span>
               </div>
               <div className="contact-item">
                 <i className="fas fa-envelope"></i>
-                <span>contato@arcanostore.com</span>
+                <span>arcanostore01@gmail.com</span>
               </div>
               <div className="contact-item">
                 <i className="fas fa-clock"></i>
@@ -86,9 +86,7 @@ const Footer = () => {
             <p>&copy; 2024 ArcanoStore. Todos os direitos reservados.</p>
           </div>
           <div className="footer-legal">
-            <a href="/privacidade">Política de Privacidade</a>
-            <a href="/termos">Termos de Uso</a>
-            <a href="/trocas">Trocas e Devoluções</a>
+            <a href="https://drive.google.com/file/d/1d-pA2NH_wF7ztu7t3C_bj5GQjCJ8gfbU/view?usp=drive_link">Termos de Uso</a>
           </div>
         </div>
       </div>

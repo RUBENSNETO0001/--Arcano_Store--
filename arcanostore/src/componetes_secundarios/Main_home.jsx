@@ -166,9 +166,6 @@ const Main = ({ onViewProduct }) => {
                             <i className="fas fa-shopping-cart"></i>
                             Ver Produto
                           </button>
-                          <button className="wishlist">
-                            <i className="far fa-heart"></i>
-                          </button>
                         </div>
                       </div>
                     </div>
@@ -177,13 +174,6 @@ const Main = ({ onViewProduct }) => {
                 // Mensagem quando não há produtos
                 <div className="no-products-message">Nenhum artefato mágico encontrado.</div>
               )}
-            </div>
-
-            <div className="section-actions">
-              <button className="btn-outline">
-                Ver Todos os Produtos
-                <i className="fas fa-arrow-right"></i>
-              </button>
             </div>
           </div>
         </section>
@@ -198,14 +188,14 @@ const Main = ({ onViewProduct }) => {
                 <i className="fas fa-shield-alt"></i>
               </div>
               <h3>Compra Segura</h3>
-              <p>Pagamento 100% seguro com criptografia arcana</p>
+              <p>Pagamento feito por pix</p>
             </div>
             <div className="benefit-card">
               <div className="benefit-icon">
                 <i className="fas fa-shipping-fast"></i>
               </div>
               <h3>Retiro de item</h3>
-              <p>Retire seus itens mágicos</p>
+              <p>Retire seus itens mágicos na loja</p>
             </div>
             <div className="benefit-card">
               <div className="benefit-icon">
@@ -219,7 +209,7 @@ const Main = ({ onViewProduct }) => {
                 <i className="fas fa-headset"></i>
               </div>
               <h3>Suporte Mágico</h3>
-              <p>Atendimento especializado 24/7</p>
+              <p>Atendimento especializado 24 horas</p>
             </div>
           </div>
         </div>
