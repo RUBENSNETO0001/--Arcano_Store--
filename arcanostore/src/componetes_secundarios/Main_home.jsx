@@ -38,6 +38,7 @@ const Main = ({ onViewProduct }) => {
   }, []); 
 
   // (Usa o primeiro produto se nenhum for marcado como 'bestseller' no mapeamento)
+  // bestseller e se o produto é popular entre os clientes
   const bestSellerProduct = featuredProducts.find(p => p.bestseller) || featuredProducts[0];
 
   const scrollToProducts = (e) => {

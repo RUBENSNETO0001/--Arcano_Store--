@@ -4,7 +4,7 @@ import '../css/Main/Main_CompraProduto.css';
 import { adicionarAoCarrinho } from '../services/system-carrinho';
 
 const ProductDetailPage = ({ productId = 1 }) => {
-  // O componente pode receber o 'productId' via props ou via URL (se você usar React Router)
+  // O componente pode receber o 'productId' via props ou via URL
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [mainImage, setMainImage] = useState('');

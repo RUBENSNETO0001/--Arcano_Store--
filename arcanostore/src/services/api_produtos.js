@@ -34,7 +34,6 @@ export const fetchProdutos = async () => {
  */
 export const fetchProdutoPorId = async (produtoId) => {
     try {
-        // *** CORREÇÃO AQUI: Usa a URL correta (API_PRODUTOS_ID) ***
         const url = `${API_PRODUTOS_ID}?id=${produtoId}`;
         console.log(`-> 🔎 URL de API PHP (ID=${produtoId}) sendo testada:`, url);
 

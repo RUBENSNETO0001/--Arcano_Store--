@@ -5,7 +5,7 @@ import Home from './componetes_secundarios/Main_home';
 import Sobre from './componentes_principais/links/sobrenos';
 import ProductDetailPage from './componetes_secundarios/Main_comprar'; 
 import { fazerLogin } from './services/apiService'; 
-import Carrinho from './componetes_secundarios/carrinho_home'; // O componente PaginaDoCarrinho
+import Carrinho from './componetes_secundarios/carrinho_home';
 
 function App() {
     const [activeView, setActiveView] = useState('home'); 
@@ -49,7 +49,7 @@ function App() {
             
             alert("Login realizado com sucesso!");
             
-            // Redirecionamento (Mantenho a sua lógica original)
+            // Redirecionamento após o login
             window.location.href = '/index.html'; 
         } else {
             alert(resultado.mensagem);
@@ -79,7 +79,7 @@ function App() {
                     />
                 );
             case 'carrinho':
-                // 🛒 O componente que criamos (PaginaDoCarrinho)
+                // O componente que criamos (PaginaDoCarrinho)
                 return <Carrinho />;
             default:
                 return <Home onViewProduct={handleViewProduct} />;
@@ -92,7 +92,7 @@ function App() {
                 onNavigate={handleNavigation} 
                 isLoggedIn={isLoggedIn} 
                 onLogin={handleLoginProcess} // Chamado ao clicar em Login no modal
-                onLogout={handleLogout}       // 🚀 NOVO: Passa a função de Logout
+                onLogout={handleLogout}       // Passa a função de Logout
             />
             {renderContent()}
             <Footer/>

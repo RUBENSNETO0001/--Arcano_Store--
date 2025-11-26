@@ -1,4 +1,3 @@
-// Footer.jsx
 import React from 'react';
 import '../css/Footer.css';
 import Contato from './links/contato';
@@ -86,7 +85,7 @@ const Footer = () => {
             <p>&copy; 2024 ArcanoStore. Todos os direitos reservados.</p>
           </div>
           <div className="footer-legal">
-            <a href="https://drive.google.com/file/d/1d-pA2NH_wF7ztu7t3C_bj5GQjCJ8gfbU/view?usp=drive_link">Termos de Uso</a>
+            <a href="https://drive.google.com/file/d/1d-pA2NH_wF7ztu7t3C_bj5GQjCJ8gfbU/view?usp=drive_link">Termos de Privacidade</a>
           </div>
         </div>
       </div>

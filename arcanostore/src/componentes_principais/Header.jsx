@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../css/Navbar.css';
 import AuthPage from '../componetes_secundarios/Login_registro'; 
 import Contato from './links/contato';
-// IMPORT CORRIGIDA: Use 'system-carrinho' se for o nome do arquivo, ou 'sistema-carrinho' se você o renomeou.
 import { obterCarrinho } from '../services/system-carrinho'; 
 
 const Header = ({ apenasLogin = false, onNavigate, isLoggedIn, onLogin, onLogout }) => {
