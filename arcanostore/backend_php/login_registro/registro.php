@@ -1,10 +1,7 @@
 <?php
-    // CONFIGURAÇÃO DE DEBUG E CORS
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(E_ALL);
-
-    // Cabeçalhos CORS e de Método
     header("Access-Control-Allow-Origin: http://localhost:3000"); 
     header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
     header("Access-Control-Allow-Headers: Content-Type"); 
