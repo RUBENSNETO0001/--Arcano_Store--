@@ -34,7 +34,8 @@ function PaginaDoCarrinho() {
         itens={itensDoCarrinho.map(item => ({
           id: item.id,
           name: item.name,
-          price: item.price, 
+          price: item.price,
+          discount: item.discount,
           // Mapeia 'quantidade' para 'quantity'
           quantity: item.quantidade, 
         }))}

@@ -126,8 +126,7 @@ const ProductDetailPage = ({ productId = 1 }) => {
             </button>
           </div>
 
-          <div className="shipping-info">
-            <i className="fas fa-shipping-fast"></i> Colete seu item na loja!
+          <div className="shipping-info"><i className="fas fa-store"></i> Colete seu item na loja!
           </div>
 
         </div>

@@ -8,15 +8,20 @@ import '../css/Main/Main_carrinho.css';
  * @param {function} props.onAtualizarQuantidade
  */
 function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade }) {
-  
-  const [pagamentoStatus, setPagamentoStatus] = useState('pendente'); 
+
+  const [pagamentoStatus, setPagamentoStatus] = useState('pendente');
   const parsePrice = (priceString) => {
     if (!priceString) return 0;
     const cleanPrice = priceString.replace('R$', '').trim().replace(',', '.');
     return parseFloat(cleanPrice) || 0;
   };
   const total = itens.reduce((acc, item) => {
-    const priceNum = parsePrice(item.price);
+    let priceNum;
+    if (parsePrice(item.price) && parsePrice(item.discount)) {
+      priceNum = (parsePrice(item.price) - parsePrice(item.price) * parsePrice(item.discount) / 100);
+    } else {
+      priceNum = parsePrice(item.price) || 0;
+    }
     const subtotal = priceNum * (item.quantity || 0);
     return acc + subtotal;
   }, 0);
@@ -28,36 +33,36 @@ function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade
     if (itens.length > 0 && pagamentoStatus === 'pendente') {
       setPagamentoStatus('pix_gerado');
       alert(`PIX gerado para o valor de R$ ${totalFormatado}.`);
-      
+
       // Simulação de confirmação de pagamento após 150 segundos
       setTimeout(() => {
         setPagamentoStatus('pago');
         alert("✅ Pagamento PIX Confirmado!");
-        for(let item of itens) {
+        for (let item of itens) {
           onRemoverItem(item.id);
         }
-      }, 15000); 
+      }, 15000);
     }
   };
 
   const renderControlesItem = (item) => (
     <div className="controles-carrinho">
       <div className="quantidade-selector-carrinho">
-        <button 
+        <button
           onClick={() => onAtualizarQuantidade(item.id, item.quantity - 1)}
-          disabled={item.quantity <= 1} 
+          disabled={item.quantity <= 1}
         >
           -
         </button>
         <span className="quantidade-valor">{item.quantity}</span>
-        <button 
+        <button
           onClick={() => onAtualizarQuantidade(item.id, item.quantity + 1)}>
           +
         </button>
       </div>
-      
-      <button 
-        className="btn-remover-carrinho" 
+
+      <button
+        className="btn-remover-carrinho"
         onClick={() => onRemoverItem(item.id)}
       >
         ❌ Remover
@@ -71,8 +76,8 @@ function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade
     switch (pagamentoStatus) {
       case 'pendente':
         return (
-          <button 
-            className="btn-finalizar-carrinho" 
+          <button
+            className="btn-finalizar-carrinho"
             onClick={handleGerarPix}
             disabled={itens.length === 0 || total === 0}
           >
@@ -84,14 +89,14 @@ function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade
         return (
           <div className="pix-info-box pix-info-gerado">
             <h4>⏱️ Aguardando Pagamento PIX...</h4>
-            
+
             <div className="pix-qr-code-placeholder">
               <img src={qrcode} alt="QR Code PIX" />
             </div>
-            
+
             <p className="pix-code-copia"><span className="pix-code">{pixCode.substring(0, 20)}...</span>
-              <button 
-                className="btn-copiar-pix" 
+              <button
+                className="btn-copiar-pix"
                 onClick={() => navigator.clipboard.writeText(pixCode)}
               >
                 📋 Copiar
@@ -118,7 +123,7 @@ function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade
   return (
     <div className="carrinho-painel">
       <h2>🛒 Seu Pedido</h2>
-      
+
       {itens.length === 0 && pagamentoStatus !== 'pago' ? (
         <p className="carrinho-vazio-msg">Seu carrinho está vazio. Adicione um produto para pagar!</p>
       ) : (
@@ -136,7 +141,7 @@ function CarrinhoPagamentoPix({ itens = [], onRemoverItem, onAtualizarQuantidade
                     Subtotal: **R$ {subtotal.toFixed(2).replace('.', ',')}**
                   </p>
                 </div>
-                
+
                 {/* Permite modificação apenas se o pagamento ainda não foi gerado/pago */}
                 {pagamentoStatus === 'pendente' && renderControlesItem(item)}
               </div>

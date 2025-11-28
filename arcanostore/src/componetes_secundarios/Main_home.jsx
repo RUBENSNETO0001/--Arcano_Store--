@@ -193,10 +193,10 @@ const Main = ({ onViewProduct }) => {
             </div>
             <div className="benefit-card">
               <div className="benefit-icon">
-                <i className="fas fa-shipping-fast"></i>
+                <i className="fas fa-store"></i>
               </div>
               <h3>Retiro de item</h3>
-              <p>Retire seus itens mágicos na loja</p>
+              <p>Retire seus itens mágicos na loja com o codigo da comprar!!</p>
             </div>
             <div className="benefit-card">
               <div className="benefit-icon">
@@ -209,7 +209,7 @@ const Main = ({ onViewProduct }) => {
               <div className="benefit-icon">
                 <i className="fas fa-headset"></i>
               </div>
-              <h3>Suporte Mágico</h3>
+              <h3>Suporte</h3>
               <p>Atendimento especializado 24 horas</p>
             </div>
           </div>
