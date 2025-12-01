@@ -11,7 +11,7 @@ const Contato = () => {
     return (
         <a href={urlWhatsApp} target="_blank" rel="noopener noreferrer" className="navbar-link">
             <i className="fab fa-whatsapp"></i> {/* Ícone do WhatsApp*/}
-            Contato
+            Contate-nòs
         </a>
     );
 };
